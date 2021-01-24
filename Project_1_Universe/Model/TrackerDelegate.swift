@@ -9,4 +9,5 @@ import Foundation
 
 protocol TrackerDelegate: class {
     func trackerDidUpdate()
+    func trackerDidRemove()
 }

@@ -17,6 +17,14 @@ class GalaxyViewController: UIViewController {
                                              right: 10.0)
     private let itemsPerRow: CGFloat = 3
     private weak var galaxy: Galaxy?
+    weak var coordinator: MainCoordinator?
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if galaxy == nil {
+            coordinator?.popBack()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +36,17 @@ class GalaxyViewController: UIViewController {
         self.galaxy?.delegate = self
     }
     
-    func galaxyDidDestroid() {
-        navigationController?.popViewController(animated: true)
+}
+
+private extension GalaxyViewController {
+    
+    func galaxyDidDestroyed() {
+        let ac = UIAlertController(title: "Houston we have a problem" , message: "The galaxy was destroyed", preferredStyle: .alert)
+        let applyAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.coordinator?.popBack(to: UniverseViewController.self)
+        }
+        ac.addAction(applyAction)
+        present(ac, animated: true)
     }
     
 }
@@ -55,11 +72,7 @@ extension GalaxyViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        guard let galaxy = galaxy else {
-            galaxyDidDestroid()
-            return 0
-        }
+        guard let galaxy = galaxy else { return 0 }
         if section == 0 {
             return galaxy.getStarPlanetarySystems().count
         } else {
@@ -78,10 +91,7 @@ extension GalaxyViewController: UICollectionViewDataSource {
 extension GalaxyViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let galaxy = galaxy else {
-            galaxyDidDestroid()
-            return
-        }
+        guard let galaxy = galaxy else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         if indexPath.section == 0 {
             let item = galaxy.getStarPlanetarySystems()[indexPath.item]
@@ -96,14 +106,9 @@ extension GalaxyViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let galaxy = galaxy else {
-            galaxyDidDestroid()
-            return
-        }
-        let vc: StarPlanetarySystemViewController = .instantiate(from: .main)
+        guard let galaxy = galaxy else { return }
         let item = galaxy.getStarPlanetarySystems()[indexPath.item]
-        vc.setupStarPlanetarySystem(with: item)
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator?.presentStarPlanetarySystemVC(with: item)
     }
 }
 
@@ -139,7 +144,11 @@ extension GalaxyViewController: UICollectionViewDelegateFlowLayout {
 extension GalaxyViewController: TrackerDelegate {
     
     func trackerDidUpdate() {
-        collectionView.reloadData()
+        collectionView?.reloadData()
+    }
+    
+    func trackerDidRemove() {
+        galaxyDidDestroyed()
     }
     
 }

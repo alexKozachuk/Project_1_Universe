@@ -17,6 +17,14 @@ class PlanetViewController: UIViewController {
                                              right: 10.0)
     private let itemsPerRow: CGFloat = 3
     private weak var planet: Planet?
+    weak var coordinator: MainCoordinator?
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if planet == nil {
+            coordinator?.popBack()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +35,22 @@ class PlanetViewController: UIViewController {
         self.planet = planet
         self.planet?.delegate = self
     }
-    
-    func planetDidDestroyd() {
-        navigationController?.popViewController(animated: true)
-    }
 
+}
+
+private extension PlanetViewController {
+    
+    func planetDidDestroyed() {
+        
+        let ac = UIAlertController(title: "Houston we have a problem" , message: "The planet was destroyed", preferredStyle: .alert)
+        let applyAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.coordinator?.popBack(to: StarPlanetarySystemViewController.self)
+        }
+        ac.addAction(applyAction)
+        present(ac, animated: true)
+        
+    }
+    
 }
 
 // MARK: - Setup Methods
@@ -51,10 +70,7 @@ private extension PlanetViewController {
 extension PlanetViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let planet = planet else {
-            planetDidDestroyd()
-            return 0
-        }
+        guard let planet = planet else { return 0 }
         return planet.getSattelites().count
     }
     
@@ -68,10 +84,7 @@ extension PlanetViewController: UICollectionViewDataSource {
 extension PlanetViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let planet = planet else {
-            planetDidDestroyd()
-            return
-        }
+        guard let planet = planet else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = planet.getSattelites()[indexPath.item]
         cell.title = item.name
@@ -110,6 +123,10 @@ extension PlanetViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension PlanetViewController: TrackerDelegate {
+    
+    func trackerDidRemove() {
+        planetDidDestroyed()
+    }
     
     func trackerDidUpdate() {
         collectionView.reloadData()

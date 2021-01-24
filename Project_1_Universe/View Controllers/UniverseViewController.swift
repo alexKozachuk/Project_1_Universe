@@ -9,6 +9,7 @@ import UIKit
 
 class UniverseViewController: UIViewController {
 
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     private let sectionInsets = UIEdgeInsets(top: 10.0,
@@ -17,6 +18,8 @@ class UniverseViewController: UIViewController {
                                              right: 10.0)
     private let itemsPerRow: CGFloat = 2
     private var universe: Universe!
+    
+    weak var coordinator: MainCoordinator?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,9 +74,7 @@ extension UniverseViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = universe.getGalaxies()[indexPath.item]
-        let vc: GalaxyViewController = .instantiate(from: .main)
-        vc.setupGalaxy(with: item)
-        navigationController?.pushViewController(vc, animated: true)
+        coordinator?.presentGalaxyVC(with: item)
     }
     
 }
@@ -108,6 +109,10 @@ extension UniverseViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension UniverseViewController: TrackerDelegate {
+    
+    func trackerDidRemove() {
+        
+    }
     
     func trackerDidUpdate() {
         collectionView.reloadData()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BlackHole {
+final class BlackHole {
     private var lifetime: TimeInterval
     private var mass: Int
     private var id: UUID

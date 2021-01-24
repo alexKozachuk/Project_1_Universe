@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StarPlanetarySystem {
+final class StarPlanetarySystem {
     
     private var star: Star
     private var lifetime: TimeInterval = 0.0
@@ -25,6 +25,7 @@ class StarPlanetarySystem {
     }
     
     deinit {
+        delegate?.trackerDidRemove()
         print("StarPlanetarySystem \(id), destroyed")
     }
     
@@ -38,7 +39,6 @@ extension StarPlanetarySystem: Handler {
         if planets.count < 9 {
             let planet = Planet()
             planets.append(planet)
-            print("Planet Created")
         }
         
         delegate?.trackerDidUpdate()

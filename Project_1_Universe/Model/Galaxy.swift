@@ -24,7 +24,7 @@ enum GalaxyType: String, CaseIterable {
     }
 }
 
-class Galaxy {
+final class Galaxy {
     
     private var lifetime: TimeInterval = 0.0
     private var type: GalaxyType
@@ -43,6 +43,7 @@ class Galaxy {
     }
     
     deinit {
+        delegate?.trackerDidRemove()
         print("Galaxy \(id), destroyed")
     }
     
@@ -111,30 +112,30 @@ extension Galaxy {
         
         for _ in 0..<countDestroy {
             let randomIndex = Int.random(in: 0...lastIndex)
-            let item = items.remove(at: randomIndex)
+            items.remove(at: randomIndex)
             lastIndex -= 1
         }
         self.blackHoles += galaxy.blackHoles
         self.starPlanetarySystems = items
     }
     
-    static func + (left: Galaxy, right: Galaxy) -> Galaxy {
-        let galaxy = left.getMass() > right.getMass() ? left : right
-        let removedGalaxy = left.getMass() < right.getMass() ? left : right
-        var items = left.starPlanetarySystems + right.starPlanetarySystems
-        
-        var lastIndex = items.count - 1
-        let countDestroy = Int(Double(items.count) * 0.5)
-        
-        for _ in 0..<countDestroy {
-            let randomIndex = Int.random(in: 0...lastIndex)
-            let item = items.remove(at: randomIndex)
-            lastIndex -= 1
-        }
-        
-        galaxy.starPlanetarySystems = items
-        return galaxy
-    }
+//    static func + (left: Galaxy, right: Galaxy) -> Galaxy {
+//        let galaxy = left.getMass() > right.getMass() ? left : right
+//        let removedGalaxy = left.getMass() < right.getMass() ? left : right
+//        var items = left.starPlanetarySystems + right.starPlanetarySystems
+//        
+//        var lastIndex = items.count - 1
+//        let countDestroy = Int(Double(items.count) * 0.5)
+//        
+//        for _ in 0..<countDestroy {
+//            let randomIndex = Int.random(in: 0...lastIndex)
+//            let item = items.remove(at: randomIndex)
+//            lastIndex -= 1
+//        }
+//        
+//        galaxy.starPlanetarySystems = items
+//        return galaxy
+//    }
     
 }
 

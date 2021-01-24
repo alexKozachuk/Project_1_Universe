@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Universe {
+final class Universe {
      
     private var galaxies: [UUID:Galaxy] = [:]
     private var timer: Timer?
@@ -45,6 +45,10 @@ extension Universe: Handler {
         checkColision()
         
     }
+    
+}
+
+private extension Universe {
     
     func checkColision() {
         

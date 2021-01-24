@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum StarType: CaseIterable {
+enum StarType: String, CaseIterable {
     case blueGiant
     case brownDwarf
     case redDwarf
@@ -53,7 +53,7 @@ enum StarStageEvolution: String {
     }
 }
 
-class Star {
+final class Star {
     
     private var type: StarType
     private var stageEvolution: StarStageEvolution
@@ -145,6 +145,14 @@ extension Star: Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+    
+}
+
+extension Star: CustomStringConvertible {
+    
+    var description: String {
+        return "ID: \(id)\nStage Evolution: \(stageEvolution)\nType: \(type)"
     }
     
 }

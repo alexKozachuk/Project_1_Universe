@@ -30,7 +30,7 @@ enum PlanetType: CaseIterable {
     }
 }
 
-class Planet {
+final class Planet {
     
     private var type: PlanetType
     private var mass: Int
@@ -67,6 +67,7 @@ class Planet {
     }
     
     deinit {
+        delegate?.trackerDidRemove()
         print("Planet \(id), destroyed")
     }
     
