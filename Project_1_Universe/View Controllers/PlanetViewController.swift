@@ -122,6 +122,8 @@ extension PlanetViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
+// MARK: - TrackerDelegate
+
 extension PlanetViewController: TrackerDelegate {
     
     func trackerDidRemove() {

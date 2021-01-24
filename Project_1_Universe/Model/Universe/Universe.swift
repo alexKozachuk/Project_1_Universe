@@ -31,24 +31,27 @@ final class Universe {
 extension Universe: Handler {
     
     func handle(_ properties: UniversProperties) {
-        
         lifetime += properties.realInterval
         
         galaxies.values.forEach {
             $0.handle(properties)
         }
-        
-        let uuid = UUID()
-        let galaxy = Galaxy(id: uuid)
-        galaxies[uuid] = galaxy
-        
+       
+        createGalaxy()
         checkColision()
-        
     }
     
 }
 
 private extension Universe {
+    
+    func createGalaxy() {
+        
+        let uuid = UUID()
+        let galaxy = Galaxy(id: uuid)
+        galaxies[uuid] = galaxy
+        
+    }
     
     func checkColision() {
         
@@ -68,6 +71,7 @@ private extension Universe {
             }
             
         }
+        
     }
     
 }

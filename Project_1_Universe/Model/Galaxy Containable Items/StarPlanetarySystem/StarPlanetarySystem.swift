@@ -35,18 +35,25 @@ extension StarPlanetarySystem: Handler {
     
     func handle(_ properties: UniversProperties) {
         self.lifetime += properties.realInterval
-    
-        if planets.count < 9 {
-            let planet = Planet()
-            planets.append(planet)
-        }
-        
-        delegate?.trackerDidUpdate()
-        
+        createPlanet()
         planets.forEach {
             $0.handle(properties)
         }
         star.handle(properties)
+    }
+    
+}
+
+private extension StarPlanetarySystem {
+    
+    func createPlanet() {
+        
+        if planets.count < 9 {
+            let planet = Planet()
+            planets.append(planet)
+            delegate?.trackerDidUpdate()
+        }
+        
     }
     
 }
@@ -100,10 +107,6 @@ extension StarPlanetarySystem {
     
     var typeImage: UIImage {
         return self.getStar().getType().image
-    }
-    
-    var stageImage: UIImage {
-        return self.getStar().getStageEvolution().image
     }
     
     

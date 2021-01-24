@@ -137,6 +137,8 @@ extension StarPlanetarySystemViewController: UICollectionViewDelegateFlowLayout 
     
 }
 
+// MARK: - TrackerDelegate
+
 extension StarPlanetarySystemViewController: TrackerDelegate {
     
     func trackerDidRemove() {

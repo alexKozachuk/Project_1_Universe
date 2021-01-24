@@ -7,23 +7,6 @@
 
 import UIKit
 
-enum GalaxyType: String, CaseIterable {
-    case Ε = "Elliptical"
-    case S = "Spiral"
-    case Irr = "Irregular"
-    
-    var image: UIImage {
-        switch self {
-        case .Ε:
-            return #imageLiteral(resourceName: "Eliptical")
-        case .S:
-            return #imageLiteral(resourceName: "Spiral")
-        case .Irr:
-            return #imageLiteral(resourceName: "Irregular")
-        }
-    }
-}
-
 final class Galaxy {
     
     private var lifetime: TimeInterval = 0.0
@@ -52,19 +35,26 @@ final class Galaxy {
 extension Galaxy: Handler {
     
     func handle(_ properties: UniversProperties) {
-        
         self.lifetime += properties.realInterval
         
-        let starPlanetarySystem = StarPlanetarySystem()
-        starPlanetarySystem.starDelegate = self
-        starPlanetarySystems.append(starPlanetarySystem)
-        print("Star Planetary System Created")
-        
-        delegate?.trackerDidUpdate()
+        createStarPlanetarySystem()
         
         starPlanetarySystems.forEach {
             $0.handle(properties)
         }
+        
+    }
+    
+}
+
+private extension Galaxy {
+    
+    func createStarPlanetarySystem() {
+        
+        let starPlanetarySystem = StarPlanetarySystem()
+        starPlanetarySystem.starDelegate = self
+        starPlanetarySystems.append(starPlanetarySystem)
+        delegate?.trackerDidUpdate()
         
     }
     

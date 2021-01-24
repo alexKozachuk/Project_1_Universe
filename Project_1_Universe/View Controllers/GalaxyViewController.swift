@@ -19,6 +19,8 @@ class GalaxyViewController: UIViewController {
     private weak var galaxy: Galaxy?
     weak var coordinator: MainCoordinator?
     
+    // MARK: - View controller lifecycle methods
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if galaxy == nil {
@@ -30,6 +32,8 @@ class GalaxyViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
     }
+    
+    // MARK: - Setup View controller method
 
     func setupGalaxy(with galaxy: Galaxy) {
         self.galaxy = galaxy
@@ -37,6 +41,8 @@ class GalaxyViewController: UIViewController {
     }
     
 }
+
+// MARK: - Helper methods
 
 private extension GalaxyViewController {
     
@@ -140,6 +146,8 @@ extension GalaxyViewController: UICollectionViewDelegateFlowLayout {
     }
     
 }
+
+// MARK: - TrackerDelegate
 
 extension GalaxyViewController: TrackerDelegate {
     

@@ -7,29 +7,6 @@
 
 import UIKit
 
-enum PlanetType: CaseIterable {
-    case EarthType
-    case GasGiant
-    case IceGiant
-    case Dwarf
-    case Sattelite
-    
-    var image: UIImage {
-        switch self {
-        case .EarthType:
-            return #imageLiteral(resourceName: "EarthTypePlanet")
-        case .GasGiant:
-            return #imageLiteral(resourceName: "GasGiantPlanet")
-        case .IceGiant:
-            return #imageLiteral(resourceName: "IceGiantPlanet")
-        case .Dwarf:
-            return #imageLiteral(resourceName: "DwarfPlanet")
-        case .Sattelite:
-            return #imageLiteral(resourceName: "DwarfPlanet")
-        }
-    }
-}
-
 final class Planet {
     
     private var type: PlanetType
@@ -77,8 +54,6 @@ extension Planet: Handler {
     
     func handle(_ properties: UniversProperties) {
         self.lifetime += properties.realInterval
-        
-        delegate?.trackerDidUpdate()
         
         satellites.forEach {
             $0.handle(properties)

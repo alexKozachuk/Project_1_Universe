@@ -108,6 +108,8 @@ extension UniverseViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
+// MARK: - TrackerDelegate
+
 extension UniverseViewController: TrackerDelegate {
     
     func trackerDidRemove() {

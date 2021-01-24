@@ -7,52 +7,6 @@
 
 import UIKit
 
-enum StarType: String, CaseIterable {
-    case blueGiant
-    case brownDwarf
-    case redDwarf
-    case redGiant
-    case redSupergiant
-    case whiteDwarf
-    case yellowDwarf
-    
-    var image: UIImage {
-        switch self {
-        case .blueGiant:
-            return #imageLiteral(resourceName: "BlueGiantStar")
-        case .brownDwarf:
-            return #imageLiteral(resourceName: "BrownDwarfStar")
-        case .redDwarf:
-            return #imageLiteral(resourceName: "RedDwarfStar")
-        case .whiteDwarf:
-            return #imageLiteral(resourceName: "WhiteDwarfStar")
-        case .redGiant:
-            return #imageLiteral(resourceName: "RedGiantStar")
-        case .redSupergiant:
-            return #imageLiteral(resourceName: "RedSupergiantStar")
-        case .yellowDwarf:
-            return #imageLiteral(resourceName: "ΥellowDwarfStar")
-        }
-    }
-}
-
-enum StarStageEvolution: String {
-    case young
-    case old
-    case degenerateDwarf
-    
-    var image: UIImage {
-        switch self {
-        case .young:
-            return #imageLiteral(resourceName: "YoungStar")
-        case .old:
-            return #imageLiteral(resourceName: "OldStar")
-        case .degenerateDwarf:
-            return #imageLiteral(resourceName: "DegenerateDwarf")
-        }
-    }
-}
-
 final class Star {
     
     private var type: StarType
@@ -89,25 +43,30 @@ extension Star: Handler {
     
     func handle(_ properties: UniversProperties) {
         lifetime += properties.realInterval
+        starEvolve(properties)
+    }
+    
+}
+
+private extension Star {
+    
+    func starEvolve(_ properties: UniversProperties) {
         
-        if Int(lifetime) % 60 == 0 {
-            print("Star Evolve")
+        guard Int(lifetime) % 60 != 0 else { return }
+        
+        let evolutionStage = Int(lifetime / 60)
             
-            let evolutionStage = Int(lifetime / 60)
-            
-            switch evolutionStage {
-            case 1:
-                self.stageEvolution = .old
-            case 2:
-                if mass > properties.massΒoundary && radius > properties.radiusBoundary {
-                    starDelegate?.starDidTransformInBlackHole()
-                } else {
-                    self.stageEvolution = .degenerateDwarf
-                }
-            default:
-                return
+        switch evolutionStage {
+        case 1:
+            self.stageEvolution = .old
+        case 2:
+            if mass > properties.massΒoundary && radius > properties.radiusBoundary {
+                starDelegate?.starDidTransformInBlackHole()
+            } else {
+                self.stageEvolution = .degenerateDwarf
             }
-            
+        default:
+            return
         }
     }
     
