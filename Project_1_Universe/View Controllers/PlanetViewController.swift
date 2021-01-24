@@ -29,6 +29,7 @@ class PlanetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        setupBarItems()
     }
     
     func setupPlanet(with planet: Planet) {
@@ -56,6 +57,10 @@ private extension PlanetViewController {
 // MARK: - Setup Methods
 
 private extension PlanetViewController {
+    
+    func setupBarItems() {
+        navigationItem.title = "Planet"
+    }
     
     func setupCollectionView() {
         collectionView.dataSource = self

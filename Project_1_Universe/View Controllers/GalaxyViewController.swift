@@ -31,6 +31,7 @@ class GalaxyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
+        setupBarItems()
     }
     
     // MARK: - Setup View controller method
@@ -60,6 +61,10 @@ private extension GalaxyViewController {
 // MARK: - Setup Methods
 
 private extension GalaxyViewController {
+    
+    func setupBarItems() {
+        navigationItem.title = "Galaxy"
+    }
     
     func setupCollectionView() {
         collectionView.dataSource = self

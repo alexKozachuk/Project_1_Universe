@@ -8,23 +8,23 @@
 import UIKit
 
 enum PlanetType: CaseIterable {
-    case EarthType
-    case GasGiant
-    case IceGiant
-    case Dwarf
-    case Sattelite
+    case earthType
+    case gasGiant
+    case iceGiant
+    case dwarf
+    case sattelite
     
     var image: UIImage {
         switch self {
-        case .EarthType:
+        case .earthType:
             return #imageLiteral(resourceName: "EarthTypePlanet")
-        case .GasGiant:
+        case .gasGiant:
             return #imageLiteral(resourceName: "GasGiantPlanet")
-        case .IceGiant:
+        case .iceGiant:
             return #imageLiteral(resourceName: "IceGiantPlanet")
-        case .Dwarf:
+        case .dwarf:
             return #imageLiteral(resourceName: "DwarfPlanet")
-        case .Sattelite:
+        case .sattelite:
             return #imageLiteral(resourceName: "DwarfPlanet")
         }
     }

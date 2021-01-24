@@ -32,6 +32,7 @@ class StarPlanetarySystemViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupStarView()
+        setupBarItems()
     }
     
     func setupStarPlanetarySystem(with starPlanetarySystem: StarPlanetarySystem) {
@@ -59,6 +60,10 @@ private extension StarPlanetarySystemViewController {
 // MARK: - Setup Methods
 
 private extension StarPlanetarySystemViewController {
+    
+    func setupBarItems() {
+        navigationItem.title = "Star Planetary System"
+    }
     
     func setupCollectionView() {
         collectionView.dataSource = self

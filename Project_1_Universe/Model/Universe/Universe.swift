@@ -18,7 +18,17 @@ final class Universe {
     
     init(properties: UniversProperties) {
         self.properties = properties
-        self.timer = Timer.scheduledTimer(timeInterval: properties.virtualInterval, target: self, selector: #selector(timerRequest), userInfo: nil, repeats: true)
+        runTime()
+    }
+    
+    var isPaused: Bool = false {
+        didSet {
+            if isPaused {
+                pauseTimer()
+            } else {
+                runTime()
+            }
+        }
     }
     
     @objc private func timerRequest() {
@@ -78,10 +88,23 @@ private extension Universe {
 
 extension Universe {
     
+    func setVirtualTime(time: TimeInterval) {
+        properties.virtualInterval = time
+    }
+    
     func getGalaxies() -> [Galaxy] {
         return Array(galaxies.values).sorted { first, second in
             first.getLifeTime() > second.getLifeTime()
         }
+    }
+    
+    func runTime() {
+        self.timer = Timer.scheduledTimer(timeInterval: properties.virtualInterval, target: self, selector: #selector(timerRequest), userInfo: nil, repeats: true)
+    }
+    
+    func pauseTimer() {
+        self.timer?.invalidate()
+        self.timer = nil
     }
     
 }

@@ -9,7 +9,7 @@ import UIKit
 
 final class Planet {
     
-    private var type: PlanetType
+    private(set) var type: PlanetType
     private var mass: Int
     private var temperature: Int
     private var radius: Int
@@ -37,7 +37,7 @@ final class Planet {
                 self.satellites.append(planet)
             }
         } else {
-            type = .Sattelite
+            type = .sattelite
         }
         
         print("Planet \(id), created")
