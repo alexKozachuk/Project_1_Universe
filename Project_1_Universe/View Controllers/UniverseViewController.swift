@@ -55,6 +55,8 @@ private extension UniverseViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(type: TopImageCollectionViewCell.self)
+        let kind = UICollectionView.elementKindSectionHeader
+        collectionView.register(type: HeaderCollectionReusableView.self, kind: kind)
     }
     
     func setupUniverse() {
@@ -71,6 +73,14 @@ private extension UniverseViewController {
 
 extension UniverseViewController: UICollectionViewDataSource {
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if universe.getGalaxies().count == 0 {
+            return CGSize.zero
+        } else {
+            return CGSize(width: 0, height: 40)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         universe.getGalaxies().count
     }
@@ -79,12 +89,20 @@ extension UniverseViewController: UICollectionViewDataSource {
         collectionView.dequeueReusableCell(with: TopImageCollectionViewCell.self, for: indexPath)
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerKind = UICollectionView.elementKindSectionHeader
+        guard kind == headerKind else { return .init() }
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, with: HeaderCollectionReusableView.self, for: indexPath)
+        headerView.title = "Galaxies"
+        return headerView
+    }
     
 }
 
 // MARK: UICollectionViewDelegate
 
 extension UniverseViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = universe.getGalaxies()[indexPath.item]

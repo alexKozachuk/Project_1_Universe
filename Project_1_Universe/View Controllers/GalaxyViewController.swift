@@ -70,6 +70,8 @@ private extension GalaxyViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(type: TopImageCollectionViewCell.self)
+        let kind = UICollectionView.elementKindSectionHeader
+        collectionView.register(type: HeaderCollectionReusableView.self, kind: kind)
     }
     
 }
@@ -77,6 +79,28 @@ private extension GalaxyViewController {
 // MARK: - UICollectionViewDataSource
 
 extension GalaxyViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let galaxy = galaxy else { return CGSize.zero }
+        
+        switch section {
+        case 0:
+            if galaxy.starPlanetarySystems.count == 0 {
+                return CGSize.zero
+            } else {
+                return CGSize(width: 0, height: 40)
+            }
+        case 1:
+            if galaxy.blackHoles.count == 0 {
+                return CGSize.zero
+            } else {
+                return CGSize(width: 0, height: 40)
+            }
+        default:
+            return CGSize.zero
+        }
+        
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -94,6 +118,23 @@ extension GalaxyViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         collectionView.dequeueReusableCell(with: TopImageCollectionViewCell.self, for: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerKind = UICollectionView.elementKindSectionHeader
+        guard kind == headerKind else { return .init() }
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, with: HeaderCollectionReusableView.self, for: indexPath)
+        
+        switch indexPath.section {
+        case 0:
+            headerView.title = "Star Planetary Systems"
+        case 1:
+            headerView.title = "Black Holes"
+        default:
+            break
+        }
+        
+        return headerView
     }
     
     
