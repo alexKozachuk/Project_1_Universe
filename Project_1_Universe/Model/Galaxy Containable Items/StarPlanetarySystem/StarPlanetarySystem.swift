@@ -9,10 +9,10 @@ import UIKit
 
 final class StarPlanetarySystem {
     
-    private var star: Star
-    private var lifetime: TimeInterval = 0.0
-    private var planets: [Planet] = []
-    private var id: UUID
+    private(set) var star: Star
+    private(set) var lifetime: TimeInterval = 0.0
+    private(set) var planets: [Planet] = []
+    private(set) var id: UUID
     
     weak var delegate: TrackerDelegate?
     weak var starDelegate: StarPlanetarySystemDelegate?
@@ -60,29 +60,13 @@ private extension StarPlanetarySystem {
 
 extension StarPlanetarySystem {
     
-    func getLifeTime() -> TimeInterval {
-        return lifetime
-    }
-    
     func getMass() -> Int {
         if planets.count == 0 {
-            return star.getMass()
+            return star.mass
         } else {
             let planetsMass = planets.reduce(0) { $0 + $1.getMass()}
-            return star.getMass() + planetsMass
+            return star.mass + planetsMass
         }
-    }
-    
-    func getID() -> UUID {
-        return id
-    }
-    
-    func getStar() -> Star {
-        return star
-    }
-    
-    func getPlanets() -> [Planet] {
-        return planets
     }
     
 }
@@ -102,11 +86,11 @@ extension StarPlanetarySystem: Hashable {
 extension StarPlanetarySystem {
     
     var name: String {
-        return "\(self.getID())"
+        return "\(id)"
     }
     
     var typeImage: UIImage {
-        return self.getStar().getType().image
+        return star.type.image
     }
     
     

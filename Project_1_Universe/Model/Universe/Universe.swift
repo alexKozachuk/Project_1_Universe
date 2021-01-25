@@ -66,7 +66,7 @@ private extension Universe {
     func checkColision() {
         
         if Int(lifetime) % 30 == 0 {
-            var items = galaxies.filter { $0.value.getLifeTime() > 180 }
+            var items = galaxies.filter { $0.value.lifetime > 180 }
             let count = items.count
             if count > 1 {
                 
@@ -74,9 +74,16 @@ private extension Universe {
                 items[firstItem.key] = nil
                 guard let secondItem = items.randomElement() else { return }
                 
-                galaxies[secondItem.key]?.collision(with: secondItem.value)
-                galaxies[firstItem.key] = nil
-                //galaxies[firstItem.key]?.delegate?.trackerDidRemoved()
+                guard let maxItem = [firstItem, secondItem].max (by:{ lhs, rhs in
+                    lhs.value < rhs.value
+                }) else { return }
+                
+                guard let minItem = [firstItem, secondItem].min (by:{ lhs, rhs in
+                    lhs.value < rhs.value
+                }) else { return }
+                
+                galaxies[maxItem.key]?.collision(with: minItem.value)
+                galaxies[minItem.key] = nil
                 
             }
             
@@ -94,7 +101,7 @@ extension Universe {
     
     func getGalaxies() -> [Galaxy] {
         return Array(galaxies.values).sorted { first, second in
-            first.getLifeTime() > second.getLifeTime()
+            first.lifetime > second.lifetime
         }
     }
     

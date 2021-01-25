@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UniverseViewController: UIViewController {
+final class UniverseViewController: UIViewController {
 
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -23,6 +23,8 @@ class UniverseViewController: UIViewController {
     private let playImage = UIImage(systemName: "play")
     
     weak var coordinator: MainCoordinator?
+    
+    // MARK: - View controller lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +81,8 @@ extension UniverseViewController: UICollectionViewDataSource {
     
     
 }
+
+// MARK: UICollectionViewDelegate
 
 extension UniverseViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -137,6 +141,8 @@ extension UniverseViewController: TrackerDelegate {
     }
     
 }
+
+// MARK: Bar Button Action Methods
 
 private extension UniverseViewController {
     

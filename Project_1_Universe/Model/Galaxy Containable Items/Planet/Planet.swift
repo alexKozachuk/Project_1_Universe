@@ -10,12 +10,12 @@ import UIKit
 final class Planet {
     
     private(set) var type: PlanetType
-    private var mass: Int
-    private var temperature: Int
-    private var radius: Int
-    private var satellites: [Planet] = []
-    private var lifetime: TimeInterval = 0.0
-    private var id: UUID
+    private(set) var mass: Int
+    private(set) var temperature: Int
+    private(set) var radius: Int
+    private(set) var satellites: [Planet] = []
+    private(set) var lifetime: TimeInterval = 0.0
+    private(set) var id: UUID
     
     weak var delegate: TrackerDelegate?
     
@@ -67,19 +67,11 @@ extension Planet {
     
     func getMass() -> Int {
         if satellites.count == 0 {
-            return self.mass
+            return mass
         } else {
             let satellitesMass = satellites.reduce(0) { $0 + $1.mass }
-            return self.mass + satellitesMass
+            return mass + satellitesMass
         }
-    }
-    
-    func getID() -> UUID {
-        return id
-    }
-    
-    func getSattelites() -> [Planet] {
-        return satellites
     }
     
 }

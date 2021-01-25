@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlanetViewController: UIViewController {
+final class PlanetViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -18,6 +18,8 @@ class PlanetViewController: UIViewController {
     private let itemsPerRow: CGFloat = 3
     private weak var planet: Planet?
     weak var coordinator: MainCoordinator?
+    
+    // MARK: - View controller lifecycle methods
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -76,7 +78,7 @@ extension PlanetViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let planet = planet else { return 0 }
-        return planet.getSattelites().count
+        return planet.satellites.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -91,7 +93,7 @@ extension PlanetViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let planet = planet else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
-        let item = planet.getSattelites()[indexPath.item]
+        let item = planet.satellites[indexPath.item]
         cell.title = item.name
         cell.image = item.image
     }
@@ -136,7 +138,7 @@ extension PlanetViewController: TrackerDelegate {
     }
     
     func trackerDidUpdate() {
-        collectionView.reloadData()
+        collectionView?.reloadData()
     }
     
 }

@@ -9,11 +9,11 @@ import UIKit
 
 final class Galaxy {
     
-    private var lifetime: TimeInterval = 0.0
-    private var type: GalaxyType
-    private var starPlanetarySystems: [StarPlanetarySystem] = []
-    private var blackHoles: [BlackHole] = []
-    private var id: UUID
+    private(set) var lifetime: TimeInterval = 0.0
+    private(set) var type: GalaxyType
+    private(set) var starPlanetarySystems: [StarPlanetarySystem] = []
+    private(set) var blackHoles: [BlackHole] = []
+    private(set) var id: UUID
     
     weak var delegate: TrackerDelegate?
     
@@ -62,22 +62,6 @@ private extension Galaxy {
 
 extension Galaxy {
     
-    func getBlackHoles() -> [BlackHole] {
-        return blackHoles
-    }
-    
-    func getType() -> GalaxyType {
-        return type
-    }
-    
-    func getLifeTime() -> TimeInterval {
-        return lifetime
-    }
-    
-    func getID() -> UUID {
-        return id
-    }
-    
     func getMass() -> Int {
         if starPlanetarySystems.count == 0 {
             return 0
@@ -86,19 +70,15 @@ extension Galaxy {
         }
     }
     
-    func getStarPlanetarySystems() -> [StarPlanetarySystem] {
-        return starPlanetarySystems
-    }
-    
 }
 
 extension Galaxy {
     
-    func collision(with galaxy: Galaxy) {
-        var items = self.getStarPlanetarySystems() + galaxy.getStarPlanetarySystems()
+    func collision(with galaxy: Galaxy, destroyPercent: Double = 0.1) {
+        var items = starPlanetarySystems + galaxy.starPlanetarySystems
         
         var lastIndex = items.count - 1
-        let countDestroy = Int(Double(items.count) * 0.9)
+        let countDestroy = Int(Double(items.count) * destroyPercent)
         
         for _ in 0..<countDestroy {
             let randomIndex = Int.random(in: 0...lastIndex)
@@ -108,24 +88,6 @@ extension Galaxy {
         self.blackHoles += galaxy.blackHoles
         self.starPlanetarySystems = items
     }
-    
-//    static func + (left: Galaxy, right: Galaxy) -> Galaxy {
-//        let galaxy = left.getMass() > right.getMass() ? left : right
-//        let removedGalaxy = left.getMass() < right.getMass() ? left : right
-//        var items = left.starPlanetarySystems + right.starPlanetarySystems
-//        
-//        var lastIndex = items.count - 1
-//        let countDestroy = Int(Double(items.count) * 0.5)
-//        
-//        for _ in 0..<countDestroy {
-//            let randomIndex = Int.random(in: 0...lastIndex)
-//            let item = items.remove(at: randomIndex)
-//            lastIndex -= 1
-//        }
-//        
-//        galaxy.starPlanetarySystems = items
-//        return galaxy
-//    }
     
 }
 
@@ -142,14 +104,22 @@ extension Galaxy: Hashable {
     
 }
 
+extension Galaxy: Comparable {
+    
+    static func < (lhs: Galaxy, rhs: Galaxy) -> Bool {
+        lhs.getMass() < rhs.getMass()
+    }
+    
+}
+
 extension Galaxy {
     
     var name: String {
-        return "\(self.getID())"
+        return "\(id)"
     }
     
     var image: UIImage {
-        return self.getType().image
+        return type.image
     }
     
 }
@@ -157,10 +127,10 @@ extension Galaxy {
 extension Galaxy: StarPlanetarySystemDelegate {
     
     func starInStarPlanetarySystemDidTransform(_ starPlanetarySystem: StarPlanetarySystem) {
-        let id = starPlanetarySystem.getID()
+        let id = starPlanetarySystem.id
         let blackHole = BlackHole(mass: starPlanetarySystem.getMass())
         self.blackHoles.append(blackHole)
-        starPlanetarySystems.removeAll { $0.getID() == id}
+        starPlanetarySystems.removeAll { $0.id == id}
         delegate?.trackerDidUpdate()
     }
     

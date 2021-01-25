@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GalaxyViewController: UIViewController {
+final class GalaxyViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -85,9 +85,9 @@ extension GalaxyViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let galaxy = galaxy else { return 0 }
         if section == 0 {
-            return galaxy.getStarPlanetarySystems().count
+            return galaxy.starPlanetarySystems.count
         } else {
-            return galaxy.getBlackHoles().count
+            return galaxy.blackHoles.count
         }
         
     }
@@ -105,11 +105,11 @@ extension GalaxyViewController: UICollectionViewDelegate {
         guard let galaxy = galaxy else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         if indexPath.section == 0 {
-            let item = galaxy.getStarPlanetarySystems()[indexPath.item]
+            let item = galaxy.starPlanetarySystems[indexPath.item]
             cell.title = item.name
             cell.image = item.typeImage
         } else {
-            let item = galaxy.getBlackHoles()[indexPath.item]
+            let item = galaxy.blackHoles[indexPath.item]
             cell.title = item.name
             cell.image = item.image
         }
@@ -117,8 +117,9 @@ extension GalaxyViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.section == 0 else { return }
         guard let galaxy = galaxy else { return }
-        let item = galaxy.getStarPlanetarySystems()[indexPath.item]
+        let item = galaxy.starPlanetarySystems[indexPath.item]
         coordinator?.presentStarPlanetarySystemVC(with: item)
     }
 }

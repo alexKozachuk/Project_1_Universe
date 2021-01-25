@@ -9,14 +9,14 @@ import UIKit
 
 final class Star {
     
-    private var type: StarType
-    private var stageEvolution: StarStageEvolution
-    private var lifetime: TimeInterval
-    private var mass: Int
-    private var temperature: Int
-    private var radius: Int
-    private var luminosity: Int
-    private var id: UUID
+    private(set) var type: StarType
+    private(set) var stageEvolution: StarStageEvolution
+    private(set) var lifetime: TimeInterval
+    private(set) var mass: Int
+    private(set) var temperature: Int
+    private(set) var radius: Int
+    private(set) var luminosity: Int
+    private(set) var id: UUID
     weak var starDelegate: StarDelegate?
     
     init() {
@@ -72,34 +72,10 @@ private extension Star {
     
 }
 
-extension Star {
-    
-    var stageEvolutionDescription: String {
-        stageEvolution.rawValue.uppercased()
-    }
-    
-    func getID() -> UUID {
-        return id
-    }
-    
-    func getMass() -> Int {
-        return self.mass
-    }
-    
-    func getStageEvolution() -> StarStageEvolution {
-        return stageEvolution
-    }
-    
-    func getType() -> StarType {
-        return type
-    }
-    
-}
-
 extension Star: Hashable {
     
     static func == (lhs: Star, rhs: Star) -> Bool {
-        lhs.getMass() == rhs.getMass()
+        lhs.mass == rhs.mass
     }
     
     func hash(into hasher: inout Hasher) {

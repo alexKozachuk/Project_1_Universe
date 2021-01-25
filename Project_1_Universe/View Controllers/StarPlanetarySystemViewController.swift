@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StarPlanetarySystemViewController: UIViewController {
+final class StarPlanetarySystemViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textLabel: UILabel!
@@ -20,6 +20,8 @@ class StarPlanetarySystemViewController: UIViewController {
     private let itemsPerRow: CGFloat = 3
     private weak var starPlanetarySystem: StarPlanetarySystem?
     weak var coordinator: MainCoordinator?
+    
+    // MARK: - View controller lifecycle methods
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -72,9 +74,9 @@ private extension StarPlanetarySystemViewController {
     }
     
     func setupStarView() {
-        guard let star = starPlanetarySystem?.getStar() else { return }
+        guard let star = starPlanetarySystem?.star else { return }
         textLabel.text = star.description
-        starImage.image = star.getType().image
+        starImage.image = star.type.image
     }
     
 }
@@ -85,7 +87,7 @@ extension StarPlanetarySystemViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let starPlanetarySystem = starPlanetarySystem else { return 0 }
-        return starPlanetarySystem.getPlanets().count
+        return starPlanetarySystem.planets.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -100,14 +102,14 @@ extension StarPlanetarySystemViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let starPlanetarySystem = starPlanetarySystem else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
-        let item = starPlanetarySystem.getPlanets()[indexPath.item]
+        let item = starPlanetarySystem.planets[indexPath.item]
         cell.title = item.name
         cell.image = item.image
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let starPlanetarySystem = starPlanetarySystem else { return }
-        let item = starPlanetarySystem.getPlanets()[indexPath.item]
+        let item = starPlanetarySystem.planets[indexPath.item]
         coordinator?.presentPlanetVC(with: item)
     }
     
@@ -151,7 +153,7 @@ extension StarPlanetarySystemViewController: TrackerDelegate {
     }
     
     func trackerDidUpdate() {
-        collectionView.reloadData()
+        collectionView?.reloadData()
     }
     
 }
