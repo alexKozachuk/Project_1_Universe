@@ -29,6 +29,18 @@ extension BlackHole: Handler {
     
 }
 
+extension BlackHole: GalaxyContainable {
+    
+    func getMass() -> Int {
+        return mass
+    }
+    
+    func getID() -> UUID {
+        return id
+    }
+    
+}
+
 extension BlackHole {
     
     var name: String {

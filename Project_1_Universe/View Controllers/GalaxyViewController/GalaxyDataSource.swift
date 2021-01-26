@@ -22,9 +22,11 @@ class GalaxyDataSource: NSObject, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let galaxy = galaxy else { return 0 }
         if section == 0 {
-            return galaxy.starPlanetarySystems.count
+            let starPlanetarySystems = galaxy.getStarPlanetarySystems()
+            return starPlanetarySystems.count
         } else {
-            return galaxy.blackHoles.count
+            let blackHoles = galaxy.getBlackHoles()
+            return blackHoles.count
         }
         
     }

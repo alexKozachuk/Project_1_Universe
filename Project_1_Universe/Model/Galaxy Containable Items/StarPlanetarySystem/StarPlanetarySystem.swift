@@ -60,19 +60,6 @@ private extension StarPlanetarySystem {
     
 }
 
-extension StarPlanetarySystem {
-    
-    func getMass() -> Int {
-        if planets.count == 0 {
-            return star.mass
-        } else {
-            let planetsMass = planets.reduce(0) { $0 + $1.getMass()}
-            return star.mass + planetsMass
-        }
-    }
-    
-}
-
 extension StarPlanetarySystem: Hashable {
     
     static func == (lhs: StarPlanetarySystem, rhs: StarPlanetarySystem) -> Bool {
@@ -102,6 +89,23 @@ extension StarPlanetarySystem: StarDelegate {
     
     func starDidTransformInBlackHole() {
         starDelegate?.starInStarPlanetarySystemDidTransform(self)
+    }
+    
+}
+
+extension StarPlanetarySystem: GalaxyContainable {
+    
+    func getMass() -> Int {
+        if planets.count == 0 {
+            return star.mass
+        } else {
+            let planetsMass = planets.reduce(0) { $0 + $1.getMass()}
+            return star.mass + planetsMass
+        }
+    }
+    
+    func getID() -> UUID {
+        return id
     }
     
 }

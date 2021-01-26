@@ -41,6 +41,7 @@
 		D999548525BD989200C529FB /* PlanetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999548425BD989200C529FB /* PlanetType.swift */; };
 		D999548D25BD993000C529FB /* StarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999548C25BD993000C529FB /* StarType.swift */; };
 		D999549025BD993900C529FB /* StarStageEvolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = D999548F25BD993900C529FB /* StarStageEvolution.swift */; };
+		D9D785B025C006B50037DF69 /* GalaxyContainable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D785AF25C006B50037DF69 /* GalaxyContainable.swift */; };
 		D9E7C6D725BEC7CD00EE15EA /* HeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E7C6D525BEC7CD00EE15EA /* HeaderCollectionReusableView.swift */; };
 		D9E7C6D825BEC7CD00EE15EA /* HeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D9E7C6D625BEC7CD00EE15EA /* HeaderCollectionReusableView.xib */; };
 /* End PBXBuildFile section */
@@ -82,6 +83,7 @@
 		D999548425BD989200C529FB /* PlanetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetType.swift; sourceTree = "<group>"; };
 		D999548C25BD993000C529FB /* StarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarType.swift; sourceTree = "<group>"; };
 		D999548F25BD993900C529FB /* StarStageEvolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarStageEvolution.swift; sourceTree = "<group>"; };
+		D9D785AF25C006B50037DF69 /* GalaxyContainable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalaxyContainable.swift; sourceTree = "<group>"; };
 		D9E7C6D525BEC7CD00EE15EA /* HeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		D9E7C6D625BEC7CD00EE15EA /* HeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -246,6 +248,7 @@
 		D999548025BD983400C529FB /* Galaxy */ = {
 			isa = PBXGroup;
 			children = (
+				D9D785AF25C006B50037DF69 /* GalaxyContainable.swift */,
 				D96DF88625BADF4300DE5B4D /* Galaxy.swift */,
 				D999547D25BD982D00C529FB /* GalaxyType.swift */,
 			);
@@ -397,6 +400,7 @@
 				D96DF84425BACF6A00DE5B4D /* AppDelegate.swift in Sources */,
 				D96DF8A225BB054500DE5B4D /* BlackHole.swift in Sources */,
 				D9E7C6D725BEC7CD00EE15EA /* HeaderCollectionReusableView.swift in Sources */,
+				D9D785B025C006B50037DF69 /* GalaxyContainable.swift in Sources */,
 				D96DF89025BADFB400DE5B4D /* Planet.swift in Sources */,
 				D96DF85D25BAD04200DE5B4D /* UIKit+Extension.swift in Sources */,
 				D96DF89325BAE1FD00DE5B4D /* TrackerDelegate.swift in Sources */,

@@ -85,14 +85,16 @@ extension GalaxyViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let galaxy = dataSource.galaxy else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
+        let starPlanetarySystems = galaxy.getStarPlanetarySystems()
+        let blackHoles = galaxy.getBlackHoles()
         if indexPath.section == 0 {
-            if indexPath.item < galaxy.starPlanetarySystems.count {
-                let item = galaxy.starPlanetarySystems[indexPath.item]
-                cell.title = item.name
-                cell.image = item.typeImage
-            }
+            guard indexPath.item < starPlanetarySystems.count else { return }
+            let item = starPlanetarySystems[indexPath.item]
+            cell.title = item.name
+            cell.image = item.typeImage
         } else {
-            let item = galaxy.blackHoles[indexPath.item]
+            guard indexPath.item < blackHoles.count else { return }
+            let item = blackHoles[indexPath.item]
             cell.title = item.name
             cell.image = item.image
         }
@@ -102,22 +104,25 @@ extension GalaxyViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard indexPath.section == 0 else { return }
         guard let galaxy = dataSource.galaxy else { return }
-        let item = galaxy.starPlanetarySystems[indexPath.item]
+        let starPlanetarySystems = galaxy.getStarPlanetarySystems()
+        let item = starPlanetarySystems[indexPath.item]
         coordinator?.presentStarPlanetarySystemVC(with: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         guard let galaxy = dataSource.galaxy else { return CGSize.zero }
+        let starPlanetarySystems = galaxy.getStarPlanetarySystems()
+        let blackHoles = galaxy.getBlackHoles()
         
         switch section {
         case 0:
-            if galaxy.starPlanetarySystems.count == 0 {
+            if starPlanetarySystems.count == 0 {
                 return CGSize.zero
             } else {
                 return CGSize(width: 0, height: 40)
             }
         case 1:
-            if galaxy.blackHoles.count == 0 {
+            if blackHoles.count == 0 {
                 return CGSize.zero
             } else {
                 return CGSize(width: 0, height: 40)
