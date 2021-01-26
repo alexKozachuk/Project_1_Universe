@@ -88,9 +88,9 @@ extension Planet: Hashable {
     
 }
 
-extension Planet {
+extension Planet: TopImagePresentable {
     
-    var name: String {
+    var title: String {
         return "\(self.id)"
     }
     

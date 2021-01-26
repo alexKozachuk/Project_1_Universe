@@ -72,13 +72,13 @@ extension StarPlanetarySystem: Hashable {
     
 }
 
-extension StarPlanetarySystem {
+extension StarPlanetarySystem: TopImagePresentable {
     
-    var name: String {
+    var title: String {
         return "\(id)"
     }
     
-    var typeImage: UIImage {
+    var image: UIImage {
         return star.type.image
     }
     

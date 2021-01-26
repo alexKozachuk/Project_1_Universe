@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol GalaxyContainable: Handler {
+protocol GalaxyContainable: Handler, TopImagePresentable {
     
     func getMass() -> Int
     func getID() ->UUID

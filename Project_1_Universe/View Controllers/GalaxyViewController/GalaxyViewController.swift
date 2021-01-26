@@ -90,13 +90,11 @@ extension GalaxyViewController: UICollectionViewDelegate {
         if indexPath.section == 0 {
             guard indexPath.item < starPlanetarySystems.count else { return }
             let item = starPlanetarySystems[indexPath.item]
-            cell.title = item.name
-            cell.image = item.typeImage
+            cell.setup(with: item)
         } else {
             guard indexPath.item < blackHoles.count else { return }
             let item = blackHoles[indexPath.item]
-            cell.title = item.name
-            cell.image = item.image
+            cell.setup(with: item)
         }
         
     }

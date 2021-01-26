@@ -102,8 +102,7 @@ extension StarPlanetarySystemViewController: UICollectionViewDelegate {
         guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = starPlanetarySystem.planets[indexPath.item]
-        cell.title = item.name
-        cell.image = item.image
+        cell.setup(with: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

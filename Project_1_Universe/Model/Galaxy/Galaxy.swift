@@ -131,9 +131,9 @@ extension Galaxy {
     
 }
 
-extension Galaxy {
+extension Galaxy: TopImagePresentable {
     
-    var name: String {
+    var title: String {
         return "\(id)"
     }
     

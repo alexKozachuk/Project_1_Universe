@@ -45,7 +45,7 @@ private extension UniverseViewController {
         
         let changeSpeedButton = UIBarButtonItem(title: "Speed", style: .done, target: self, action: #selector(changeSpeed))
         
-        navigationItem.rightBarButtonItems = [changeSpeedButton, toggleTimerButton]
+        navigationItem.rightBarButtonItems = [toggleTimerButton, changeSpeedButton]
         navigationItem.title = "Universe"
     }
     
@@ -78,8 +78,7 @@ extension UniverseViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = dataSource.getItem(at: indexPath)
-        cell.title = item.name
-        cell.image = item.image
+        cell.setup(with: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -178,7 +177,7 @@ private extension UniverseViewController {
         }
         
         let normalSpeedButton = UIAlertAction(title: "Normal", style: .default) { [weak self] _ in
-            self?.dataSource.universe.setVirtualTime(time: 1)
+            self?.dataSource.universe.setVirtualTime(time: 10)
             self?.dataSource.universe.isPaused = currentState
         }
         

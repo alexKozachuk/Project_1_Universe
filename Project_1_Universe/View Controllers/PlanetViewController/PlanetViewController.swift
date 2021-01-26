@@ -93,8 +93,7 @@ extension PlanetViewController: UICollectionViewDelegate {
         guard let planet = dataSource.planet else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = planet.satellites[indexPath.item]
-        cell.title = item.name
-        cell.image = item.image
+        cell.setup(with: item)
     }
     
 }

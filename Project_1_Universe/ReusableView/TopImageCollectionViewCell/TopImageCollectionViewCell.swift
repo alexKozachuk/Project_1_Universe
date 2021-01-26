@@ -30,6 +30,11 @@ class TopImageCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    func setup(with item: TopImagePresentable) {
+        self.image = item.image
+        self.title = item.title
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

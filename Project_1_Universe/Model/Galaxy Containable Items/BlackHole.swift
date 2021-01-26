@@ -41,9 +41,9 @@ extension BlackHole: GalaxyContainable {
     
 }
 
-extension BlackHole {
+extension BlackHole: TopImagePresentable {
     
-    var name: String {
+    var title: String {
         return "\(id)"
     }
     
