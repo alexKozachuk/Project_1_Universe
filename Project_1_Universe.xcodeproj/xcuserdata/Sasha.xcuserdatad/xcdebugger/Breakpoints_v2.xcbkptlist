@@ -63,9 +63,9 @@
             filePath = "Project_1_Universe/Model/Universe/Universe.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "pauseTimer()"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "runTime()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -209,8 +209,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
             endingLineNumber = "152"
-            landmarkName = "starInStarPlanetarySystemDidTransform(_:)"
-            landmarkType = "7">
+            landmarkName = "Galaxy"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

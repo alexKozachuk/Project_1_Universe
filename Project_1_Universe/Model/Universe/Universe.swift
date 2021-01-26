@@ -110,11 +110,13 @@ extension Universe {
     
     func runTime() {
         
-        DispatchQueue.global(qos: .background).async { [weak self] in
+        let queue = DispatchQueue(label: "project.universe.timer.async", qos: .utility)
+        queue.async { [weak self] in
             guard let self = self else { return }
             self.timer = Timer.scheduledTimer(timeInterval: self.properties.virtualInterval, target: self, selector: #selector(self.timerRequest), userInfo: nil, repeats: true)
             RunLoop.current.run()
         }
+        
     }
     
     func pauseTimer() {
