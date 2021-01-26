@@ -13,11 +13,6 @@ final class StarPlanetarySystemViewController: UIViewController {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var starImage: UIImageView!
     
-    private let sectionInsets = UIEdgeInsets(top: 10.0,
-                                             left: 10.0,
-                                             bottom: 10.0,
-                                             right: 10.0)
-    private let itemsPerRow: CGFloat = 3
     private var dataSource: StarPlanetarySystemDataSource!
     weak var coordinator: MainCoordinator?
     
@@ -74,6 +69,7 @@ private extension StarPlanetarySystemViewController {
     func setupCollectionView() {
         collectionView.dataSource = dataSource
         collectionView.delegate = self
+        collectionView.collectionViewLayout = makeLayout(itemsPerRow: 3)
         collectionView.register(type: TopImageCollectionViewCell.self)
         let kind = UICollectionView.elementKindSectionHeader
         collectionView.register(type: HeaderCollectionReusableView.self, kind: kind)
@@ -85,18 +81,26 @@ private extension StarPlanetarySystemViewController {
         starImage.image = star.type.image
     }
     
+    func makeLayout(itemsPerRow: CGFloat) -> UICollectionViewFlowLayout {
+        
+        let sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        let layout = UICollectionViewFlowLayout()
+        let paddingSpace = sectionInset.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+
+        layout.itemSize = CGSize(width: widthPerItem, height: widthPerItem)
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.headerReferenceSize = CGSize(width: 0, height: 40)
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        
+        return layout
+    }
+    
 }
 
 extension StarPlanetarySystemViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return CGSize.zero }
-        if starPlanetarySystem.planets.count == 0 {
-            return CGSize.zero
-        } else {
-            return CGSize(width: 0, height: 40)
-        }
-    }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return }
@@ -109,35 +113,6 @@ extension StarPlanetarySystemViewController: UICollectionViewDelegate {
         guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return }
         let item = starPlanetarySystem.planets[indexPath.item]
         coordinator?.presentPlanetVC(with: item)
-    }
-    
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension StarPlanetarySystemViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                          layout collectionViewLayout: UICollectionViewLayout,
-                          sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let availableWidth = view.frame.width - paddingSpace
-        let widthPerItem = availableWidth / itemsPerRow
-
-        return CGSize(width: widthPerItem, height: widthPerItem)
-      }
-      
-    func collectionView(_ collectionView: UICollectionView,
-                          layout collectionViewLayout: UICollectionViewLayout,
-                          insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
-      
-    func collectionView(_ collectionView: UICollectionView,
-                          layout collectionViewLayout: UICollectionViewLayout,
-                          minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
     }
     
 }

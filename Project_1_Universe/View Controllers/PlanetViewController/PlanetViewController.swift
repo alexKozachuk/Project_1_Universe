@@ -11,11 +11,6 @@ final class PlanetViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private let sectionInsets = UIEdgeInsets(top: 10.0,
-                                             left: 10.0,
-                                             bottom: 10.0,
-                                             right: 10.0)
-    private let itemsPerRow: CGFloat = 3
     private var dataSource: PlanetDataSource!
     weak var coordinator: MainCoordinator?
     
@@ -71,58 +66,38 @@ private extension PlanetViewController {
     func setupCollectionView() {
         collectionView.dataSource = self.dataSource
         collectionView.delegate = self
+        collectionView.collectionViewLayout = makeLayout(itemsPerRow: 3)
         collectionView.register(type: TopImageCollectionViewCell.self)
         let kind = UICollectionView.elementKindSectionHeader
         collectionView.register(type: HeaderCollectionReusableView.self, kind: kind)
+    }
+    
+    func makeLayout(itemsPerRow: CGFloat) -> UICollectionViewFlowLayout {
+        
+        let sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        let layout = UICollectionViewFlowLayout()
+        let paddingSpace = sectionInset.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+
+        layout.itemSize = CGSize(width: widthPerItem, height: widthPerItem)
+        layout.minimumInteritemSpacing = 8
+        layout.minimumLineSpacing = 8
+        layout.headerReferenceSize = CGSize(width: 0, height: 40)
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        
+        return layout
     }
     
 }
 
 extension PlanetViewController: UICollectionViewDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let planet = dataSource.planet else { return CGSize.zero }
-        if planet.satellites.count == 0 {
-            return CGSize.zero
-        } else {
-            return CGSize(width: 0, height: 40)
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let planet = dataSource.planet else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = planet.satellites[indexPath.item]
         cell.setup(with: item)
-    }
-    
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension PlanetViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView,
-                          layout collectionViewLayout: UICollectionViewLayout,
-                          sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
-        let availableWidth = view.frame.width - paddingSpace
-        let widthPerItem = availableWidth / itemsPerRow
-       
-        return CGSize(width: widthPerItem, height: widthPerItem)
-      }
-      
-    func collectionView(_ collectionView: UICollectionView,
-                          layout collectionViewLayout: UICollectionViewLayout,
-                          insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
-      
-    func collectionView(_ collectionView: UICollectionView,
-                          layout collectionViewLayout: UICollectionViewLayout,
-                          minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
     }
     
 }
