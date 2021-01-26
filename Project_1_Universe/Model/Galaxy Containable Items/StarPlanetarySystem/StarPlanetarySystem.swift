@@ -25,7 +25,7 @@ final class StarPlanetarySystem {
     }
     
     deinit {
-        delegate?.trackerDidRemove()
+        self.delegate?.trackerDidRemove()
         print("StarPlanetarySystem \(id), destroyed")
     }
     
@@ -51,7 +51,9 @@ private extension StarPlanetarySystem {
         if planets.count < 9 {
             let planet = Planet()
             planets.append(planet)
-            delegate?.trackerDidUpdate()
+            DispatchQueue.main.async { [weak self] in
+                self?.delegate?.trackerDidUpdate()
+            }
         }
         
     }

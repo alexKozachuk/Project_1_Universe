@@ -44,7 +44,7 @@ final class Planet {
     }
     
     deinit {
-        delegate?.trackerDidRemove()
+        self.delegate?.trackerDidRemove()
         print("Planet \(id), destroyed")
     }
     

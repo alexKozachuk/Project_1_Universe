@@ -42,7 +42,6 @@ final class GalaxyViewController: UIViewController {
     }
     
 }
-
 // MARK: - Helper methods
 
 private extension GalaxyViewController {
@@ -53,7 +52,11 @@ private extension GalaxyViewController {
             self?.coordinator?.popBack(to: UniverseViewController.self)
         }
         ac.addAction(applyAction)
-        present(ac, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.present(ac, animated: true)
+        }
+        
     }
     
 }
@@ -146,9 +149,11 @@ extension GalaxyViewController: UICollectionViewDelegate {
         guard let galaxy = galaxy else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         if indexPath.section == 0 {
-            let item = galaxy.starPlanetarySystems[indexPath.item]
-            cell.title = item.name
-            cell.image = item.typeImage
+            if indexPath.item < galaxy.starPlanetarySystems.count {
+                let item = galaxy.starPlanetarySystems[indexPath.item]
+                cell.title = item.name
+                cell.image = item.typeImage
+            }
         } else {
             let item = galaxy.blackHoles[indexPath.item]
             cell.title = item.name
@@ -204,6 +209,7 @@ extension GalaxyViewController: TrackerDelegate {
     
     func trackerDidRemove() {
         galaxyDidDestroyed()
+        
     }
     
 }

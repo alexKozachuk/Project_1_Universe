@@ -53,7 +53,10 @@ private extension StarPlanetarySystemViewController {
             self?.coordinator?.popBack(to: GalaxyViewController.self)
         }
         ac.addAction(applyAction)
-        present(ac, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.present(ac, animated: true)
+        }
         
     }
     

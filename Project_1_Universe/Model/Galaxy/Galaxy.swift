@@ -26,7 +26,7 @@ final class Galaxy {
     }
     
     deinit {
-        delegate?.trackerDidRemove()
+        self.delegate?.trackerDidRemove()
         print("Galaxy \(id), destroyed")
     }
     
@@ -54,7 +54,9 @@ private extension Galaxy {
         let starPlanetarySystem = StarPlanetarySystem()
         starPlanetarySystem.starDelegate = self
         starPlanetarySystems.append(starPlanetarySystem)
-        delegate?.trackerDidUpdate()
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.trackerDidUpdate()
+        }
         
     }
     
@@ -74,7 +76,7 @@ extension Galaxy {
 
 extension Galaxy {
     
-    func collision(with galaxy: Galaxy, destroyPercent: Double = 0.1) {
+    func collision(with galaxy: Galaxy, destroyPercent: Double = 0.8) {
         var items = starPlanetarySystems + galaxy.starPlanetarySystems
         
         var lastIndex = items.count - 1
@@ -131,7 +133,9 @@ extension Galaxy: StarPlanetarySystemDelegate {
         let blackHole = BlackHole(mass: starPlanetarySystem.getMass())
         self.blackHoles.append(blackHole)
         starPlanetarySystems.removeAll { $0.id == id}
-        delegate?.trackerDidUpdate()
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.trackerDidUpdate()
+        }
     }
     
 }

@@ -17,19 +17,18 @@ final class UniverseViewController: UIViewController {
                                              bottom: 10.0,
                                              right: 10.0)
     private let itemsPerRow: CGFloat = 2
-    private var universe: Universe!
+    private var dataSource: UniverseDataSource!
     private var toggleTimerButton: UIBarButtonItem?
     private let pauseImage = UIImage(systemName: "pause")
     private let playImage = UIImage(systemName: "play")
-    
     weak var coordinator: MainCoordinator?
     
     // MARK: - View controller lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCollectionView()
         setupUniverse()
+        setupCollectionView()
         setupBarItems()
     }
 
@@ -46,55 +45,28 @@ private extension UniverseViewController {
         
         let changeSpeedButton = UIBarButtonItem(title: "Speed", style: .done, target: self, action: #selector(changeSpeed))
         
-        
         navigationItem.rightBarButtonItems = [changeSpeedButton, toggleTimerButton]
         navigationItem.title = "Universe"
-    }
-    
-    func setupCollectionView() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(type: TopImageCollectionViewCell.self)
-        let kind = UICollectionView.elementKindSectionHeader
-        collectionView.register(type: HeaderCollectionReusableView.self, kind: kind)
     }
     
     func setupUniverse() {
         
         let properties = UniversProperties(massΒoundary: 40, radiusBoundary: 40, virtualInterval: 10.0)
-        universe = Universe(properties: properties)
-        universe?.delegate = self
+        let universe = Universe(properties: properties)
+        universe.delegate = self
+        let dataSource = UniverseDataSource(universe: universe)
+        self.dataSource = dataSource
         
     }
     
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension UniverseViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if universe.getGalaxies().count == 0 {
-            return CGSize.zero
-        } else {
-            return CGSize(width: 0, height: 40)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        universe.getGalaxies().count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(with: TopImageCollectionViewCell.self, for: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerKind = UICollectionView.elementKindSectionHeader
-        guard kind == headerKind else { return .init() }
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, with: HeaderCollectionReusableView.self, for: indexPath)
-        headerView.title = "Galaxies"
-        return headerView
+    func setupCollectionView() {
+        
+        collectionView.dataSource = self.dataSource
+        collectionView.delegate = self
+        collectionView.register(type: TopImageCollectionViewCell.self)
+        let kind = UICollectionView.elementKindSectionHeader
+        collectionView.register(type: HeaderCollectionReusableView.self, kind: kind)
+        
     }
     
 }
@@ -105,13 +77,13 @@ extension UniverseViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         guard let cell = cell as? TopImageCollectionViewCell else { return }
-        let item = universe.getGalaxies()[indexPath.item]
+        let item = dataSource.getItem(at: indexPath)
         cell.title = item.name
         cell.image = item.image
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = universe.getGalaxies()[indexPath.item]
+        let item = dataSource.getItem(at: indexPath)
         coordinator?.presentGalaxyVC(with: item)
     }
     
@@ -120,30 +92,30 @@ extension UniverseViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension UniverseViewController: UICollectionViewDelegateFlowLayout {
-    
+
     func collectionView(_ collectionView: UICollectionView,
                           layout collectionViewLayout: UICollectionViewLayout,
                           sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = view.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
 
         return CGSize(width: widthPerItem, height: widthPerItem)
       }
-      
+
     func collectionView(_ collectionView: UICollectionView,
                           layout collectionViewLayout: UICollectionViewLayout,
                           insetForSectionAt section: Int) -> UIEdgeInsets {
         return sectionInsets
     }
-      
+
     func collectionView(_ collectionView: UICollectionView,
                           layout collectionViewLayout: UICollectionViewLayout,
                           minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
-    
+
 }
 
 // MARK: - TrackerDelegate
@@ -165,41 +137,41 @@ extension UniverseViewController: TrackerDelegate {
 private extension UniverseViewController {
     
     @objc func toggleTimer() {
-        universe.isPaused.toggle()
-        let image = universe.isPaused ? playImage : pauseImage
+        dataSource.universe.isPaused.toggle()
+        let image = dataSource.universe.isPaused ? playImage : pauseImage
         toggleTimerButton?.image = image
     }
     
     @objc func changeSpeed() {
-        let currentState = universe.isPaused
+        let currentState = dataSource.universe.isPaused
         
-        universe.isPaused = true
+        dataSource.universe.isPaused = true
         
         let speedActionSheet = UIAlertController(title: "Choose Speed", message: nil, preferredStyle: .actionSheet)
         
         let x2speedButton = UIAlertAction(title: "Speed x2", style: .default) { [weak self] _ in
-            self?.universe.setVirtualTime(time: 5)
-            self?.universe.isPaused = currentState
+            self?.dataSource.universe.setVirtualTime(time: 5)
+            self?.dataSource.universe.isPaused = currentState
         }
         
         let x5speedButton = UIAlertAction(title: "Speed x5", style: .default) { [weak self] _ in
-            self?.universe.setVirtualTime(time: 2)
-            self?.universe.isPaused = currentState
+            self?.dataSource.universe.setVirtualTime(time: 2)
+            self?.dataSource.universe.isPaused = currentState
         }
         
         let x10speedButton = UIAlertAction(title: "Speed x10", style: .default) { [weak self] _ in
-            self?.universe.setVirtualTime(time: 1)
-            self?.universe.isPaused = currentState
+            self?.dataSource.universe.setVirtualTime(time: 1)
+            self?.dataSource.universe.isPaused = currentState
         }
         
         let x20speedButton = UIAlertAction(title: "Speed x20", style: .default) { [weak self] _ in
-            self?.universe.setVirtualTime(time: 0.5)
-            self?.universe.isPaused = currentState
+            self?.dataSource.universe.setVirtualTime(time: 0.5)
+            self?.dataSource.universe.isPaused = currentState
         }
         
         let normalSpeedButton = UIAlertAction(title: "Normal", style: .default) { [weak self] _ in
-            self?.universe.setVirtualTime(time: 1)
-            self?.universe.isPaused = currentState
+            self?.dataSource.universe.setVirtualTime(time: 1)
+            self?.dataSource.universe.isPaused = currentState
         }
         
         speedActionSheet.addAction(x2speedButton)

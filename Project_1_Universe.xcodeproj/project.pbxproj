@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9087D1C25BF682B00DC8F7F /* UniverseDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9087D1B25BF682B00DC8F7F /* UniverseDataSource.swift */; };
 		D96DF84425BACF6A00DE5B4D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DF84325BACF6A00DE5B4D /* AppDelegate.swift */; };
 		D96DF84625BACF6A00DE5B4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DF84525BACF6A00DE5B4D /* SceneDelegate.swift */; };
 		D96DF84825BACF6A00DE5B4D /* UniverseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D96DF84725BACF6A00DE5B4D /* UniverseViewController.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D9087D1B25BF682B00DC8F7F /* UniverseDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniverseDataSource.swift; sourceTree = "<group>"; };
 		D96DF84025BACF6A00DE5B4D /* Project_1_Universe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project_1_Universe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D96DF84325BACF6A00DE5B4D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D96DF84525BACF6A00DE5B4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D9087D1E25BF6B0000DC8F7F /* UniverseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D96DF84725BACF6A00DE5B4D /* UniverseViewController.swift */,
+				D9087D1B25BF682B00DC8F7F /* UniverseDataSource.swift */,
+			);
+			path = UniverseViewController;
+			sourceTree = "<group>";
+		};
 		D96DF83725BACF6900DE5B4D = {
 			isa = PBXGroup;
 			children = (
@@ -125,7 +136,7 @@
 		D96DF85925BAD01300DE5B4D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D96DF84725BACF6A00DE5B4D /* UniverseViewController.swift */,
+				D9087D1E25BF6B0000DC8F7F /* UniverseViewController */,
 				D96DF87225BADC1B00DE5B4D /* GalaxyViewController.swift */,
 				D96DF87525BADC7900DE5B4D /* StarPlanetarySystemViewController.swift */,
 				D96DF87825BADCD100DE5B4D /* PlanetViewController.swift */,
@@ -345,6 +356,7 @@
 				D96DF8A525BB080800DE5B4D /* StarDelegate.swift in Sources */,
 				D96DF8A825BB08C400DE5B4D /* StarPlanetarySystemDelegate.swift in Sources */,
 				D96DF87325BADC1B00DE5B4D /* GalaxyViewController.swift in Sources */,
+				D9087D1C25BF682B00DC8F7F /* UniverseDataSource.swift in Sources */,
 				D999549025BD993900C529FB /* StarStageEvolution.swift in Sources */,
 				D96DF84425BACF6A00DE5B4D /* AppDelegate.swift in Sources */,
 				D96DF8A225BB054500DE5B4D /* BlackHole.swift in Sources */,

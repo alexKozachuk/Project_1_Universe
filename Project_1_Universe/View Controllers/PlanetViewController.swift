@@ -50,7 +50,10 @@ private extension PlanetViewController {
             self?.coordinator?.popBack(to: StarPlanetarySystemViewController.self)
         }
         ac.addAction(applyAction)
-        present(ac, animated: true)
+        
+        DispatchQueue.main.async { [weak self] in
+            self?.present(ac, animated: true)
+        }
         
     }
     

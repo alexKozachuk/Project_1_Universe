@@ -33,7 +33,10 @@ final class Universe {
     
     @objc private func timerRequest() {
         handle(properties)
-        delegate?.trackerDidUpdate()
+        DispatchQueue.main.async { [weak self] in
+            self?.delegate?.trackerDidUpdate()
+        }
+        
     }
     
 }
@@ -106,7 +109,12 @@ extension Universe {
     }
     
     func runTime() {
-        self.timer = Timer.scheduledTimer(timeInterval: properties.virtualInterval, target: self, selector: #selector(timerRequest), userInfo: nil, repeats: true)
+        
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else { return }
+            self.timer = Timer.scheduledTimer(timeInterval: self.properties.virtualInterval, target: self, selector: #selector(self.timerRequest), userInfo: nil, repeats: true)
+            RunLoop.current.run()
+        }
     }
     
     func pauseTimer() {
