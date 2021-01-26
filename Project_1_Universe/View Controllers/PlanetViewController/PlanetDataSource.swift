@@ -1,26 +1,23 @@
 //
-//  UniverseDataSource.swift
+//  PlanetDataSource.swift
 //  Project_1_Universe
 //
-//  Created by Sasha on 25/01/2021.
+//  Created by Sasha on 26/01/2021.
 //
 
 import UIKit
 
-class UniverseDataSource: NSObject, UICollectionViewDataSource {
+class PlanetDataSource: NSObject, UICollectionViewDataSource {
     
-    private(set) var universe: Universe
+    private(set) weak var planet: Planet?
     
-    init(universe: Universe) {
-        self.universe = universe
-    }
-    
-    func getItem(at indexPath: IndexPath) -> Galaxy {
-        universe.getGalaxies()[indexPath.row]
+    init(planet: Planet) {
+        self.planet = planet
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        universe.getGalaxies().count
+        guard let planet = planet else { return 0 }
+        return planet.satellites.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -31,9 +28,8 @@ class UniverseDataSource: NSObject, UICollectionViewDataSource {
         let headerKind = UICollectionView.elementKindSectionHeader
         guard kind == headerKind else { return .init() }
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, with: HeaderCollectionReusableView.self, for: indexPath)
-        headerView.title = "Galaxies"
+        headerView.title = "Satellites"
         return headerView
     }
     
 }
-

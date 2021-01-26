@@ -87,6 +87,14 @@ extension UniverseViewController: UICollectionViewDelegate {
         coordinator?.presentGalaxyVC(with: item)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if dataSource.universe.getGalaxies().count == 0 {
+            return CGSize.zero
+        } else {
+            return CGSize(width: 0, height: 40)
+        }
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

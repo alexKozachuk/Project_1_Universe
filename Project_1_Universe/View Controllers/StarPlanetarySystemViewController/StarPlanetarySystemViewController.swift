@@ -18,14 +18,14 @@ final class StarPlanetarySystemViewController: UIViewController {
                                              bottom: 10.0,
                                              right: 10.0)
     private let itemsPerRow: CGFloat = 3
-    private weak var starPlanetarySystem: StarPlanetarySystem?
+    private var dataSource: StarPlanetarySystemDataSource!
     weak var coordinator: MainCoordinator?
     
     // MARK: - View controller lifecycle methods
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if starPlanetarySystem == nil {
+        if dataSource.starPlanetarySystem == nil {
             coordinator?.popBack()
         }
     }
@@ -38,8 +38,9 @@ final class StarPlanetarySystemViewController: UIViewController {
     }
     
     func setupStarPlanetarySystem(with starPlanetarySystem: StarPlanetarySystem) {
-        self.starPlanetarySystem = starPlanetarySystem
-        self.starPlanetarySystem?.delegate = self
+        starPlanetarySystem.delegate = self
+        let dataSource = StarPlanetarySystemDataSource(starPlanetarySystem: starPlanetarySystem)
+        self.dataSource = dataSource
     }
     
 }
@@ -71,7 +72,7 @@ private extension StarPlanetarySystemViewController {
     }
     
     func setupCollectionView() {
-        collectionView.dataSource = self
+        collectionView.dataSource = dataSource
         collectionView.delegate = self
         collectionView.register(type: TopImageCollectionViewCell.self)
         let kind = UICollectionView.elementKindSectionHeader
@@ -79,19 +80,17 @@ private extension StarPlanetarySystemViewController {
     }
     
     func setupStarView() {
-        guard let star = starPlanetarySystem?.star else { return }
+        guard let star = dataSource.starPlanetarySystem?.star else { return }
         textLabel.text = star.description
         starImage.image = star.type.image
     }
     
 }
 
-// MARK: - UICollectionViewDataSource
-
-extension StarPlanetarySystemViewController: UICollectionViewDataSource {
+extension StarPlanetarySystemViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let starPlanetarySystem = starPlanetarySystem else { return CGSize.zero }
+        guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return CGSize.zero }
         if starPlanetarySystem.planets.count == 0 {
             return CGSize.zero
         } else {
@@ -99,30 +98,8 @@ extension StarPlanetarySystemViewController: UICollectionViewDataSource {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let starPlanetarySystem = starPlanetarySystem else { return 0 }
-        return starPlanetarySystem.planets.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueReusableCell(with: TopImageCollectionViewCell.self, for: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerKind = UICollectionView.elementKindSectionHeader
-        guard kind == headerKind else { return .init() }
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, with: HeaderCollectionReusableView.self, for: indexPath)
-        headerView.title = "Planets"
-        return headerView
-    }
-    
-    
-}
-
-extension StarPlanetarySystemViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let starPlanetarySystem = starPlanetarySystem else { return }
+        guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = starPlanetarySystem.planets[indexPath.item]
         cell.title = item.name
@@ -130,7 +107,7 @@ extension StarPlanetarySystemViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let starPlanetarySystem = starPlanetarySystem else { return }
+        guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return }
         let item = starPlanetarySystem.planets[indexPath.item]
         coordinator?.presentPlanetVC(with: item)
     }

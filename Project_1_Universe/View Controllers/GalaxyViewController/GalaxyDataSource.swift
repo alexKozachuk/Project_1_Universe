@@ -1,26 +1,32 @@
 //
-//  UniverseDataSource.swift
+//  GalaxyDataSource.swift
 //  Project_1_Universe
 //
-//  Created by Sasha on 25/01/2021.
+//  Created by Sasha on 26/01/2021.
 //
 
 import UIKit
 
-class UniverseDataSource: NSObject, UICollectionViewDataSource {
+class GalaxyDataSource: NSObject, UICollectionViewDataSource {
     
-    private(set) var universe: Universe
+    private(set) weak var galaxy: Galaxy?
     
-    init(universe: Universe) {
-        self.universe = universe
+    init(galaxy: Galaxy) {
+        self.galaxy = galaxy
     }
     
-    func getItem(at indexPath: IndexPath) -> Galaxy {
-        universe.getGalaxies()[indexPath.row]
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        universe.getGalaxies().count
+        guard let galaxy = galaxy else { return 0 }
+        if section == 0 {
+            return galaxy.starPlanetarySystems.count
+        } else {
+            return galaxy.blackHoles.count
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -31,9 +37,17 @@ class UniverseDataSource: NSObject, UICollectionViewDataSource {
         let headerKind = UICollectionView.elementKindSectionHeader
         guard kind == headerKind else { return .init() }
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, with: HeaderCollectionReusableView.self, for: indexPath)
-        headerView.title = "Galaxies"
+        
+        switch indexPath.section {
+        case 0:
+            headerView.title = "Star Planetary Systems"
+        case 1:
+            headerView.title = "Black Holes"
+        default:
+            break
+        }
+        
         return headerView
     }
     
 }
-
