@@ -202,11 +202,13 @@
 		D96DF86425BAD08200DE5B4D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D96DF87B25BADE9A00DE5B4D /* Handler.swift */,
-				D96DF89225BAE1FD00DE5B4D /* TrackerDelegate.swift */,
 				D96DF87E25BADEA800DE5B4D /* Universe */,
 				D999548025BD983400C529FB /* Galaxy */,
 				D999548125BD986200C529FB /* Galaxy Containable Items */,
+				D999548825BD98C900C529FB /* Star */,
+				D999548725BD989D00C529FB /* Planet */,
+				D96DF87B25BADE9A00DE5B4D /* Handler.swift */,
+				D96DF89225BAE1FD00DE5B4D /* TrackerDelegate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -263,8 +265,6 @@
 			children = (
 				D999548A25BD98D200C529FB /* StarPlanetarySystem */,
 				D96DF8A125BB054500DE5B4D /* BlackHole.swift */,
-				D999548825BD98C900C529FB /* Star */,
-				D999548725BD989D00C529FB /* Planet */,
 			);
 			path = "Galaxy Containable Items";
 			sourceTree = "<group>";

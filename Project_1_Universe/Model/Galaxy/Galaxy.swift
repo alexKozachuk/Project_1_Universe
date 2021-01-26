@@ -77,7 +77,7 @@ extension Galaxy {
 
 extension Galaxy {
     
-    func collision(with galaxy: Galaxy, destroyPercent: Double = 0.8) {
+    func collision(with galaxy: Galaxy, destroyPercent: Double = 0.1) {
         var items = self.galaxyObjects + galaxy.galaxyObjects
         
         var lastIndex = items.count - 1

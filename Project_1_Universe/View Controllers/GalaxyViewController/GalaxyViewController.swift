@@ -83,20 +83,9 @@ private extension GalaxyViewController {
 extension GalaxyViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let galaxy = dataSource.galaxy else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
-        let starPlanetarySystems = galaxy.getStarPlanetarySystems()
-        let blackHoles = galaxy.getBlackHoles()
-        if indexPath.section == 0 {
-            guard indexPath.item < starPlanetarySystems.count else { return }
-            let item = starPlanetarySystems[indexPath.item]
-            cell.setup(with: item)
-        } else {
-            guard indexPath.item < blackHoles.count else { return }
-            let item = blackHoles[indexPath.item]
-            cell.setup(with: item)
-        }
-        
+        guard let item = dataSource.getItem(at: indexPath) else { return }
+        cell.setup(with: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
