@@ -10,7 +10,7 @@ import UIKit
 final class UniverseViewController: UIViewController {
 
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     private var dataSource: UniverseDataSource!
     private var toggleTimerButton: UIBarButtonItem?
     private let pauseImage = UIImage(systemName: "pause")

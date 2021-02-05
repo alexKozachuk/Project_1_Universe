@@ -9,7 +9,7 @@ import UIKit
 
 final class GalaxyViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     
     private var dataSource: GalaxyDataSource!
     weak var coordinator: MainCoordinator?

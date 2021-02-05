@@ -9,9 +9,9 @@ import UIKit
 
 final class StarPlanetarySystemViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var textLabel: UILabel!
-    @IBOutlet weak var starImage: UIImageView!
+    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var textLabel: UILabel!
+    @IBOutlet private weak var starImage: UIImageView!
     
     private var dataSource: StarPlanetarySystemDataSource!
     weak var coordinator: MainCoordinator?

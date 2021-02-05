@@ -9,7 +9,7 @@ import UIKit
 
 final class PlanetViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: UICollectionView!
     
     private var dataSource: PlanetDataSource!
     weak var coordinator: MainCoordinator?

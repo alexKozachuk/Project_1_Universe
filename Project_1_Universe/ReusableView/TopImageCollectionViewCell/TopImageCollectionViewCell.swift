@@ -9,8 +9,8 @@ import UIKit
 
 class TopImageCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var nameLable: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var nameLable: UILabel!
     
     var title: String? {
         get {
