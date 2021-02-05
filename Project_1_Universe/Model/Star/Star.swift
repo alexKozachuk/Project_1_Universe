@@ -11,7 +11,7 @@ final class Star {
     
     private(set) var type: StarType
     private(set) var stageEvolution: StarStageEvolution
-    private(set) var lifetime: TimeInterval
+    private(set) var lifetime: TimeInterval = 0.0
     private(set) var mass: Int
     private(set) var temperature: Int
     private(set) var radius: Int
@@ -19,17 +19,14 @@ final class Star {
     private(set) var id: UUID
     weak var starDelegate: StarDelegate?
     
-    init() {
-        let items = StarType.allCases
-        let lastIndex = items.count - 1
-        self.type = items[Int.random(in: 0...lastIndex)]
-        self.stageEvolution = .young
-        self.lifetime = 0.0
-        self.mass = Int.random(in: 1...100)
-        self.temperature = Int.random(in: 1...100)
-        self.luminosity = Int.random(in: 1...100)
-        self.radius = Int.random(in: 1...100)
-        self.id = UUID()
+    init(type: StarType, stageEvolution: StarStageEvolution, mass: Int, temperature: Int, radius: Int, luminosity: Int, id: UUID) {
+        self.type = type
+        self.stageEvolution = stageEvolution
+        self.mass = mass
+        self.temperature = temperature
+        self.radius = radius
+        self.luminosity = luminosity
+        self.id = id
         print("Star \(id), created")
     }
     

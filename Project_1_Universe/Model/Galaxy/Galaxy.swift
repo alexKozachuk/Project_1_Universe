@@ -12,16 +12,13 @@ final class Galaxy {
     private(set) var lifetime: TimeInterval = 0.0
     private(set) var type: GalaxyType
     private(set) var galaxyObjects: [GalaxyContainable] = []
-    //private(set) var starPlanetarySystems: [StarPlanetarySystem] = []
-    //private(set) var blackHoles: [BlackHole] = []
     private(set) var id: UUID
     
     weak var delegate: TrackerDelegate?
+    private let starPlanetarySystemFactory: StarPlanetarySystemFactory = RandomStarPlanetarySystemFactory()
     
-    init(id: UUID) {
-        let items = GalaxyType.allCases
-        let lastIndex = items.count - 1
-        self.type = items[Int.random(in: 0...lastIndex)]
+    init(id: UUID, type: GalaxyType) {
+        self.type = type
         self.id = id
         print("Galaxy \(id), created")
     }
@@ -52,7 +49,7 @@ private extension Galaxy {
     
     func createStarPlanetarySystem() {
         
-        let starPlanetarySystem = StarPlanetarySystem()
+        let starPlanetarySystem = starPlanetarySystemFactory.createStarPlanetarySystem()
         starPlanetarySystem.starDelegate = self
         galaxyObjects.append(starPlanetarySystem)
         DispatchQueue.main.async { [weak self] in

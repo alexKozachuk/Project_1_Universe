@@ -19,26 +19,13 @@ final class Planet {
     
     weak var delegate: TrackerDelegate?
     
-    init(hasSatellites: Bool = true) {
-        
-        self.mass = Int.random(in: 1...100)
-        self.temperature = Int.random(in: 1...100)
-        self.radius = Int.random(in: 1...100)
-        self.id = UUID()
-        
-        if hasSatellites {
-            
-            let items = PlanetType.allCases
-            let lastIndex = items.count - 2
-            self.type = items[Int.random(in: 0...lastIndex)]
-            
-            for _ in 0...Int.random(in: 0...5) {
-                let planet = Planet(hasSatellites: false)
-                self.satellites.append(planet)
-            }
-        } else {
-            type = .sattelite
-        }
+    init(type: PlanetType, mass: Int, temperature: Int, radius: Int, satellites: [Planet], id: UUID) {
+        self.type = type
+        self.mass = mass
+        self.temperature = temperature
+        self.radius = radius
+        self.satellites = satellites
+        self.id = id
         
         print("Planet \(id), created")
     }

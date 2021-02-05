@@ -8,12 +8,11 @@
 import UIKit
 
 final class BlackHole {
-    private var lifetime: TimeInterval
+    private var lifetime: TimeInterval = 0.0
     private var mass: Int
     private var id: UUID
     
     init(mass: Int) {
-        self.lifetime = 0.0
         self.mass = mass
         self.id = UUID()
     }

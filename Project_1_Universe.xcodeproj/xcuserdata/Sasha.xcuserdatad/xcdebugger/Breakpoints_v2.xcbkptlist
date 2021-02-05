@@ -63,8 +63,8 @@
             filePath = "Project_1_Universe/Model/Universe/Universe.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "pauseTimer()"
             landmarkType = "7">
          </BreakpointContent>
@@ -79,8 +79,8 @@
             filePath = "Project_1_Universe/Model/Universe/Universe.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
             landmarkName = "checkColision()"
             landmarkType = "7">
          </BreakpointContent>
@@ -95,8 +95,8 @@
             filePath = "Project_1_Universe/Model/Universe/Universe.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "checkColision()"
             landmarkType = "7">
          </BreakpointContent>
@@ -191,8 +191,8 @@
             filePath = "Project_1_Universe/Model/Galaxy/Galaxy.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "starInStarPlanetarySystemDidTransform(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -207,8 +207,8 @@
             filePath = "Project_1_Universe/Model/Galaxy/Galaxy.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
             landmarkName = "starInStarPlanetarySystemDidTransform(_:)"
             landmarkType = "7">
          </BreakpointContent>

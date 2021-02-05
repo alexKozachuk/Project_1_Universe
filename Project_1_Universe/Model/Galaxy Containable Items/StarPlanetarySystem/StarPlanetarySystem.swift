@@ -16,11 +16,11 @@ final class StarPlanetarySystem {
     
     weak var delegate: TrackerDelegate?
     weak var starDelegate: StarPlanetarySystemDelegate?
+    private let planetFactory: PlanetFactory = RandomPlanetFactory()
     
-    init() {
-        self.star = Star()
-        self.id = UUID()
-        star.starDelegate = self
+    init(star: Star, id: UUID) {
+        self.star = star
+        self.id = id
         print("StarPlanetarySystem \(id), created")
     }
     
@@ -49,7 +49,7 @@ private extension StarPlanetarySystem {
     func createPlanet() {
         
         if planets.count < 9 {
-            let planet = Planet()
+            let planet = planetFactory.createPlanet()
             planets.append(planet)
             DispatchQueue.main.async { [weak self] in
                 self?.delegate?.trackerDidUpdate()

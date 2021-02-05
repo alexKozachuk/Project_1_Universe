@@ -13,15 +13,16 @@ final class Universe {
     private var timer: Timer?
     private var properties: UniversProperties
     private var lifetime: TimeInterval = 0.0
+    private let galaxyFactory: GalaxyFactory = RandomGalaxyFactory()
     
     weak var delegate: TrackerDelegate?
     
     init(properties: UniversProperties) {
         self.properties = properties
-        runTime()
+        self.isPaused = false
     }
     
-    var isPaused: Bool = false {
+    var isPaused: Bool {
         didSet {
             if isPaused {
                 pauseTimer()
@@ -61,7 +62,7 @@ private extension Universe {
     func createGalaxy() {
         
         let uuid = UUID()
-        let galaxy = Galaxy(id: uuid)
+        let galaxy = galaxyFactory.createGalaxy(id: uuid)
         galaxies[uuid] = galaxy
         
     }
