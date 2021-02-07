@@ -11,14 +11,14 @@ final class PlanetViewController: UIViewController {
 
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private var dataSource: PlanetDataSource!
+    private var dataSource: PlanetDataSource?
     weak var coordinator: MainCoordinator?
     
     // MARK: - View controller lifecycle methods
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if dataSource.planet == nil {
+        if dataSource?.planet == nil {
             coordinator?.popBack()
         }
     }
@@ -94,6 +94,7 @@ private extension PlanetViewController {
 extension PlanetViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let dataSource = dataSource else { return }
         guard let planet = dataSource.planet else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = planet.satellites[indexPath.item]

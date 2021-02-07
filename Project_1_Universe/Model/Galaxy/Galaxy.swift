@@ -16,6 +16,7 @@ final class Galaxy {
     
     weak var delegate: TrackerDelegate?
     private let starPlanetarySystemFactory: StarPlanetarySystemFactory = RandomStarPlanetarySystemFactory()
+    private let blackHoleFactory: BlackHoleFactory = SimpleBlackHoleFactory()
     
     init(id: UUID, type: GalaxyType) {
         self.type = type
@@ -144,7 +145,7 @@ extension Galaxy: StarPlanetarySystemDelegate {
     
     func starInStarPlanetarySystemDidTransform(_ starPlanetarySystem: StarPlanetarySystem) {
         let id = starPlanetarySystem.id
-        let blackHole = BlackHole(mass: starPlanetarySystem.getMass())
+        let blackHole = blackHoleFactory.createBlackHole(with: starPlanetarySystem)
         guard let index = galaxyObjects.firstIndex(where: { $0.getID() == id}) else { return }
         galaxyObjects[index] = blackHole
         DispatchQueue.main.async { [weak self] in

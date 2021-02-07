@@ -11,7 +11,7 @@ final class UniverseViewController: UIViewController {
 
     
     @IBOutlet private weak var collectionView: UICollectionView!
-    private var dataSource: UniverseDataSource!
+    private var dataSource: UniverseDataSource?
     private var toggleTimerButton: UIBarButtonItem?
     private let pauseImage = UIImage(systemName: "pause")
     private let playImage = UIImage(systemName: "play")
@@ -88,12 +88,14 @@ private extension UniverseViewController {
 extension UniverseViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let dataSource = dataSource else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = dataSource.getItem(at: indexPath)
         cell.setup(with: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let dataSource = dataSource else { return }
         let item = dataSource.getItem(at: indexPath)
         coordinator?.presentGalaxyVC(with: item)
     }
@@ -119,12 +121,14 @@ extension UniverseViewController: TrackerDelegate {
 private extension UniverseViewController {
     
     @objc func toggleTimer() {
+        guard let dataSource = dataSource else { return }
         dataSource.universe.isPaused.toggle()
         let image = dataSource.universe.isPaused ? playImage : pauseImage
         toggleTimerButton?.image = image
     }
     
     @objc func changeSpeed() {
+        guard let dataSource = dataSource else { return }
         let currentState = dataSource.universe.isPaused
         
         dataSource.universe.isPaused = true
@@ -132,28 +136,28 @@ private extension UniverseViewController {
         let speedActionSheet = UIAlertController(title: "Choose Speed", message: nil, preferredStyle: .actionSheet)
         
         let x2speedButton = UIAlertAction(title: "Speed x2", style: .default) { [weak self] _ in
-            self?.dataSource.universe.setVirtualTime(time: 5)
-            self?.dataSource.universe.isPaused = currentState
+            self?.dataSource?.universe.setVirtualTime(time: 5)
+            self?.dataSource?.universe.isPaused = currentState
         }
         
         let x5speedButton = UIAlertAction(title: "Speed x5", style: .default) { [weak self] _ in
-            self?.dataSource.universe.setVirtualTime(time: 2)
-            self?.dataSource.universe.isPaused = currentState
+            self?.dataSource?.universe.setVirtualTime(time: 2)
+            self?.dataSource?.universe.isPaused = currentState
         }
         
         let x10speedButton = UIAlertAction(title: "Speed x10", style: .default) { [weak self] _ in
-            self?.dataSource.universe.setVirtualTime(time: 1)
-            self?.dataSource.universe.isPaused = currentState
+            self?.dataSource?.universe.setVirtualTime(time: 1)
+            self?.dataSource?.universe.isPaused = currentState
         }
         
         let x20speedButton = UIAlertAction(title: "Speed x20", style: .default) { [weak self] _ in
-            self?.dataSource.universe.setVirtualTime(time: 0.5)
-            self?.dataSource.universe.isPaused = currentState
+            self?.dataSource?.universe.setVirtualTime(time: 0.5)
+            self?.dataSource?.universe.isPaused = currentState
         }
         
         let normalSpeedButton = UIAlertAction(title: "Normal", style: .default) { [weak self] _ in
-            self?.dataSource.universe.setVirtualTime(time: 10)
-            self?.dataSource.universe.isPaused = currentState
+            self?.dataSource?.universe.setVirtualTime(time: 10)
+            self?.dataSource?.universe.isPaused = currentState
         }
         
         speedActionSheet.addAction(x2speedButton)

@@ -11,14 +11,14 @@ final class GalaxyViewController: UIViewController {
 
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private var dataSource: GalaxyDataSource!
+    private var dataSource: GalaxyDataSource?
     weak var coordinator: MainCoordinator?
     
     // MARK: - View controller lifecycle methods
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if dataSource.galaxy == nil {
+        if dataSource?.galaxy == nil {
             coordinator?.popBack()
         }
     }
@@ -96,12 +96,14 @@ private extension GalaxyViewController {
 extension GalaxyViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let dataSource = dataSource else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         guard let item = dataSource.getItem(at: indexPath) else { return }
         cell.setup(with: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let dataSource = dataSource else { return }
         guard indexPath.section == 0 else { return }
         guard let galaxy = dataSource.galaxy else { return }
         let starPlanetarySystems = galaxy.getStarPlanetarySystems()

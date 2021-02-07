@@ -13,14 +13,14 @@ final class StarPlanetarySystemViewController: UIViewController {
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var starImage: UIImageView!
     
-    private var dataSource: StarPlanetarySystemDataSource!
+    private var dataSource: StarPlanetarySystemDataSource?
     weak var coordinator: MainCoordinator?
     
     // MARK: - View controller lifecycle methods
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if dataSource.starPlanetarySystem == nil {
+        if dataSource?.starPlanetarySystem == nil {
             coordinator?.popBack()
         }
     }
@@ -76,7 +76,7 @@ private extension StarPlanetarySystemViewController {
     }
     
     func setupStarView() {
-        guard let star = dataSource.starPlanetarySystem?.star else { return }
+        guard let star = dataSource?.starPlanetarySystem?.star else { return }
         textLabel.text = star.description
         starImage.image = star.type.image
     }
@@ -103,14 +103,14 @@ private extension StarPlanetarySystemViewController {
 extension StarPlanetarySystemViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return }
+        guard let starPlanetarySystem = dataSource?.starPlanetarySystem else { return }
         guard let cell = cell as? TopImageCollectionViewCell else { return }
         let item = starPlanetarySystem.planets[indexPath.item]
         cell.setup(with: item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let starPlanetarySystem = dataSource.starPlanetarySystem else { return }
+        guard let starPlanetarySystem = dataSource?.starPlanetarySystem else { return }
         let item = starPlanetarySystem.planets[indexPath.item]
         coordinator?.presentPlanetVC(with: item)
     }
