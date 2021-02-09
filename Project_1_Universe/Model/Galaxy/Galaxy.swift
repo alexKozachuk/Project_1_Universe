@@ -116,15 +116,11 @@ extension Galaxy: Comparable {
 extension Galaxy {
     
     func getStarPlanetarySystems() -> [StarPlanetarySystem] {
-        galaxyObjects.filter { $0 is StarPlanetarySystem }.map {
-            $0 as! StarPlanetarySystem
-        }
+        galaxyObjects.compactMap { $0 as? StarPlanetarySystem }
     }
     
     func getBlackHoles() -> [BlackHole] {
-        galaxyObjects.filter { $0 is BlackHole }.map {
-            $0 as! BlackHole
-        }
+        galaxyObjects.compactMap { $0 as? BlackHole }
     }
     
 }

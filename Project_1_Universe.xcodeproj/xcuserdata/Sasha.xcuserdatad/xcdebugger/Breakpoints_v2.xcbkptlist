@@ -191,10 +191,10 @@
             filePath = "Project_1_Universe/Model/Galaxy/Galaxy.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "starInStarPlanetarySystemDidTransform(_:)"
-            landmarkType = "7">
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -207,10 +207,26 @@
             filePath = "Project_1_Universe/Model/Galaxy/Galaxy.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
-            landmarkName = "starInStarPlanetarySystemDidTransform(_:)"
-            landmarkType = "7">
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E418D2CB-02E6-4120-8B9B-79CE6A3FF645"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Project_1_Universe/Extensions/UIKit+Extension.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "4"
+            endingLineNumber = "4"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

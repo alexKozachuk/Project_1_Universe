@@ -44,9 +44,8 @@ class MainCoordinator: Coordinator {
     }
     
     func popBack<T: UIViewController>(to controllerType: T.Type) {
-        var viewControllers: [UIViewController] = self.navigationController.viewControllers
-        viewControllers = viewControllers.reversed()
-        if let vc = viewControllers.first(where: { $0.isKind(of: controllerType) }) {
+        let viewControllers: [UIViewController] = self.navigationController.viewControllers
+        if let vc = viewControllers.last(where: { $0.isKind(of: controllerType) }) {
             self.navigationController.popToViewController(vc, animated: true)
         }
     }
