@@ -140,7 +140,7 @@ extension Galaxy: TopImagePresentable {
 extension Galaxy: StarPlanetarySystemDelegate {
     
     func starInStarPlanetarySystemDidTransform(_ starPlanetarySystem: StarPlanetarySystem) {
-        let id = starPlanetarySystem.id
+        let id = starPlanetarySystem.getID()
         let blackHole = blackHoleFactory.createBlackHole(with: starPlanetarySystem)
         guard let index = galaxyObjects.firstIndex(where: { $0.getID() == id}) else { return }
         galaxyObjects[index] = blackHole

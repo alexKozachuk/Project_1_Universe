@@ -7,13 +7,17 @@
 
 import UIKit
 
-class StarPlanetarySystemDataSource: NSObject, UICollectionViewDataSource {
+class StarPlanetarySystemDataSource: NSObject {
     
     private(set) weak var starPlanetarySystem: StarPlanetarySystem?
     
     init(starPlanetarySystem: StarPlanetarySystem) {
         self.starPlanetarySystem = starPlanetarySystem
     }
+    
+}
+
+extension StarPlanetarySystemDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let starPlanetarySystem = starPlanetarySystem else { return 0 }

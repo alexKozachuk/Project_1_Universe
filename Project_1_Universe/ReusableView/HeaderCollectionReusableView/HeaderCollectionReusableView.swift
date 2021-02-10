@@ -20,10 +20,6 @@ class HeaderCollectionReusableView: UICollectionReusableView {
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func prepareForReuse() {
         title = nil
     }

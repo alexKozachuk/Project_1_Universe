@@ -15,17 +15,16 @@ final class Planet {
     private(set) var radius: Int
     private(set) var satellites: [Planet] = []
     private(set) var lifetime: TimeInterval = 0.0
-    private(set) var id: UUID
+    let id: UUID = UUID()
     
     weak var delegate: TrackerDelegate?
     
-    init(type: PlanetType, mass: Int, temperature: Int, radius: Int, satellites: [Planet], id: UUID) {
+    init(type: PlanetType, mass: Int, temperature: Int, radius: Int, satellites: [Planet]) {
         self.type = type
         self.mass = mass
         self.temperature = temperature
         self.radius = radius
         self.satellites = satellites
-        self.id = id
         
         print("Planet \(id), created")
     }

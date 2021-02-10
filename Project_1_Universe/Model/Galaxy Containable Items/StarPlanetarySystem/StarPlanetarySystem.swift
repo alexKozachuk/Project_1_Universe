@@ -12,15 +12,14 @@ final class StarPlanetarySystem {
     private(set) var star: Star
     private(set) var lifetime: TimeInterval = 0.0
     private(set) var planets: [Planet] = []
-    private(set) var id: UUID
+    private let id: UUID = UUID()
     
     weak var delegate: TrackerDelegate?
     weak var starDelegate: StarPlanetarySystemDelegate?
     private let planetFactory: PlanetFactory = RandomPlanetFactory()
     
-    init(star: Star, id: UUID) {
+    init(star: Star) {
         self.star = star
-        self.id = id
         print("StarPlanetarySystem \(id), created")
     }
     

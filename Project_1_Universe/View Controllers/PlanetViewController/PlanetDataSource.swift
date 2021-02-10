@@ -7,13 +7,17 @@
 
 import UIKit
 
-class PlanetDataSource: NSObject, UICollectionViewDataSource {
+class PlanetDataSource: NSObject {
     
     private(set) weak var planet: Planet?
     
     init(planet: Planet) {
         self.planet = planet
     }
+    
+}
+
+extension PlanetDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let planet = planet else { return 0 }

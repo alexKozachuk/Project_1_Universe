@@ -63,8 +63,8 @@
             filePath = "Project_1_Universe/Model/Universe/Universe.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "pauseTimer()"
             landmarkType = "7">
          </BreakpointContent>
@@ -193,8 +193,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "148"
             endingLineNumber = "148"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "starInStarPlanetarySystemDidTransform(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -209,8 +209,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "146"
             endingLineNumber = "146"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "starInStarPlanetarySystemDidTransform(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

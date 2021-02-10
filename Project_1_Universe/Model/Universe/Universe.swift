@@ -109,6 +109,10 @@ extension Universe {
         }
     }
     
+    var count: Int {
+        return galaxies.count
+    }
+    
     func runTime() {
         
         let queue = DispatchQueue(label: "project.universe.timer.async", qos: .utility)

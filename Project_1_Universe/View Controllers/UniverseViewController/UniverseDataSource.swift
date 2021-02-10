@@ -7,20 +7,20 @@
 
 import UIKit
 
-class UniverseDataSource: NSObject, UICollectionViewDataSource {
+class UniverseDataSource: NSObject {
     
     private(set) var universe: Universe
     
     init(universe: Universe) {
         self.universe = universe
     }
-    
-    func getItem(at indexPath: IndexPath) -> Galaxy {
-        universe.getGalaxies()[indexPath.row]
-    }
+
+}
+
+extension UniverseDataSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        universe.getGalaxies().count
+        universe.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -33,6 +33,14 @@ class UniverseDataSource: NSObject, UICollectionViewDataSource {
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, with: HeaderCollectionReusableView.self, for: indexPath)
         headerView.title = "Galaxies"
         return headerView
+    }
+    
+}
+
+extension UniverseDataSource {
+    
+    func getItem(at indexPath: IndexPath) -> Galaxy {
+        universe.getGalaxies()[indexPath.row]
     }
     
 }

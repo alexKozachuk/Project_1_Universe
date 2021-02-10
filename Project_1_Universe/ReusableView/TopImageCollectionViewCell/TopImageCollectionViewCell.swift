@@ -35,10 +35,6 @@ class TopImageCollectionViewCell: UICollectionViewCell {
         self.title = item.title
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-    
     override func prepareForReuse() {
         title = nil
         image = nil

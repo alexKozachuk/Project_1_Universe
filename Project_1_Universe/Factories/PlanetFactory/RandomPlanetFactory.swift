@@ -13,7 +13,6 @@ class RandomPlanetFactory: PlanetFactory {
         let mass = Int.random(in: 1...100)
         let temperature = Int.random(in: 1...100)
         let radius = Int.random(in: 1...100)
-        let id = UUID()
         var satellites: [Planet] = []
         
         let items = PlanetType.allCases
@@ -25,17 +24,16 @@ class RandomPlanetFactory: PlanetFactory {
             satellites.append(planet)
         }
         
-        return Planet(type: type, mass: mass, temperature: temperature, radius: radius, satellites: satellites, id: id)
+        return Planet(type: type, mass: mass, temperature: temperature, radius: radius, satellites: satellites)
     }
     
     private func createSatellite() -> Planet {
         let mass = Int.random(in: 1...50)
         let temperature = Int.random(in: 1...50)
         let radius = Int.random(in: 1...50)
-        let id = UUID()
         let type = PlanetType.sattelite
         
-        return Planet(type: type, mass: mass, temperature: temperature, radius: radius, satellites: [], id: id)
+        return Planet(type: type, mass: mass, temperature: temperature, radius: radius, satellites: [])
     }
     
     

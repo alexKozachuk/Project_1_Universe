@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GalaxyDataSource: NSObject, UICollectionViewDataSource {
+class GalaxyDataSource: NSObject {
     
     private(set) weak var galaxy: Galaxy?
     
@@ -15,18 +15,9 @@ class GalaxyDataSource: NSObject, UICollectionViewDataSource {
         self.galaxy = galaxy
     }
     
-    func getItem(at indexPath: IndexPath) -> GalaxyContainable? {
-        guard let galaxy = galaxy else { return nil }
-        if indexPath.section == 0 {
-            let starPlanetarySystems = galaxy.getStarPlanetarySystems()
-            guard indexPath.item < starPlanetarySystems.count else { return nil }
-            return starPlanetarySystems[indexPath.item]
-        } else {
-            let blackHoles = galaxy.getBlackHoles()
-            guard indexPath.item < blackHoles.count else { return nil }
-            return blackHoles[indexPath.item]
-        }
-    }
+}
+ 
+extension GalaxyDataSource: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -63,6 +54,23 @@ class GalaxyDataSource: NSObject, UICollectionViewDataSource {
         }
         
         return headerView
+    }
+    
+}
+
+extension GalaxyDataSource {
+    
+    func getItem(at indexPath: IndexPath) -> GalaxyContainable? {
+        guard let galaxy = galaxy else { return nil }
+        if indexPath.section == 0 {
+            let starPlanetarySystems = galaxy.getStarPlanetarySystems()
+            guard indexPath.item < starPlanetarySystems.count else { return nil }
+            return starPlanetarySystems[indexPath.item]
+        } else {
+            let blackHoles = galaxy.getBlackHoles()
+            guard indexPath.item < blackHoles.count else { return nil }
+            return blackHoles[indexPath.item]
+        }
     }
     
 }

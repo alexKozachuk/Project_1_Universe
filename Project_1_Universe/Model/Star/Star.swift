@@ -16,17 +16,16 @@ final class Star {
     private(set) var temperature: Int
     private(set) var radius: Int
     private(set) var luminosity: Int
-    private(set) var id: UUID
+    let id: UUID = UUID()
     weak var starDelegate: StarDelegate?
     
-    init(type: StarType, stageEvolution: StarStageEvolution, mass: Int, temperature: Int, radius: Int, luminosity: Int, id: UUID) {
+    init(type: StarType, stageEvolution: StarStageEvolution, mass: Int, temperature: Int, radius: Int, luminosity: Int) {
         self.type = type
         self.stageEvolution = stageEvolution
         self.mass = mass
         self.temperature = temperature
         self.radius = radius
         self.luminosity = luminosity
-        self.id = id
         print("Star \(id), created")
     }
     

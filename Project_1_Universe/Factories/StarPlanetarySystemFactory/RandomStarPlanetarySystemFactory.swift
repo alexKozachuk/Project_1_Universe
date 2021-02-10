@@ -14,8 +14,7 @@ class RandomStarPlanetarySystemFactory: StarPlanetarySystemFactory {
     func createStarPlanetarySystem() -> StarPlanetarySystem {
         
         let star = starFactory.createStar()
-        let id = UUID()
-        let item = StarPlanetarySystem(star: star, id: id)
+        let item = StarPlanetarySystem(star: star)
         star.starDelegate = item
         
         return item

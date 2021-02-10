@@ -18,8 +18,7 @@ class RandomStarFactory: StarFactory {
         let temperature = Int.random(in: 1...100)
         let luminosity = Int.random(in: 1...100)
         let radius = Int.random(in: 1...100)
-        let id = UUID()
-        return Star(type: type, stageEvolution: stageEvolution, mass: mass, temperature: temperature, radius: radius, luminosity: luminosity, id: id)
+        return Star(type: type, stageEvolution: stageEvolution, mass: mass, temperature: temperature, radius: radius, luminosity: luminosity)
     }
     
 }
